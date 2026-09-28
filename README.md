@@ -20,6 +20,7 @@ Professional portfolio site for Habib Alejandro Apez Gonzalez, built for deploym
 - `assets/images/`: favicon and placeholder media
 - `assets/docs/Habib_Apez_CV.pdf`: downloadable CV file
 - `scripts/check_internal_links.rb`: generated-site internal link validation
+- `scripts/create_social_thumbnail.ps1`: regenerates the LinkedIn/Open Graph card
 - `.github/workflows/pages.yml`: continuous integration and GitHub Pages deployment
 
 ## Local Setup
@@ -45,6 +46,12 @@ ruby scripts/check_internal_links.rb _site
 ```
 
 The Sass configuration suppresses deprecation warnings originating inside Minimal Mistakes. The custom converter extension in `_plugins/sass_deprecation_filter.rb` also filters the two known `@import` notices required by the Minimal Mistakes 4.x entry points. Other project-owned Sass warnings remain visible.
+
+Regenerate the 1200×627 social thumbnail on Windows after changing its text or design:
+
+```powershell
+.\scripts\create_social_thumbnail.ps1
+```
 
 ## Deployment (GitHub Pages)
 

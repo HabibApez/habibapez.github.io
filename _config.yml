@@ -7,7 +7,7 @@ repository: "HabibApez/habibapez.github.io"
 locale: "en-US"
 timezone: "America/Toronto"
 logo: "/assets/images/favicon.svg"
-og_image: "/assets/images/projects-fusion.svg"
+og_image: "/assets/images/social-card.png"
 
 theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: "default"

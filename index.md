@@ -4,7 +4,7 @@ title: "Habib Alejandro Apez Gonzalez"
 tagline: "Embedded Systems Engineer · AI Researcher in the Making · Bridging Automotive & Artificial Intelligence"
 excerpt: "Sr. ADAS R&D Embedded Software Engineer with 9+ Years building radar and safety-critical automotive systems while transitioning into AI/ML."
 description: "Engineering and AI portfolio: 9+ Years in safety-critical ADAS development, with research and projects focused on trustworthy intelligent mobility."
-image: /assets/images/projects-fusion.svg
+image: /assets/images/social-card.png
 header:
   overlay_filter: 0.08
   overlay_color: "#eaf3fb"
