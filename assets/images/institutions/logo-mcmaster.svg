@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" role="img" aria-label="McMaster University logo badge">
+  <rect width="600" height="180" rx="16" fill="#111827"/>
+  <rect x="16" y="16" width="568" height="148" rx="12" fill="#1f2937" stroke="#ef4444"/>
+  <text x="36" y="78" fill="#f3f4f6" font-size="32" font-family="Segoe UI, Tahoma, sans-serif">McMaster University</text>
+  <text x="36" y="126" fill="#ef4444" font-size="52" font-weight="700" font-family="Segoe UI, Tahoma, sans-serif">McMaster</text>
+</svg>

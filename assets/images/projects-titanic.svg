@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" role="img" aria-label="Titanic ML project thumbnail">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1e3d"/>
+      <stop offset="100%" stop-color="#163b68"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c5e91"/>
+      <stop offset="100%" stop-color="#163b68"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="460" fill="url(#bg)"/>
+  <rect y="290" width="800" height="170" fill="url(#sea)"/>
+
+  <circle cx="700" cy="90" r="46" fill="#d8e8ff" opacity="0.25"/>
+
+  <path d="M120 300 H590 L660 260 H260 Z" fill="#f3f6fb" opacity="0.95"/>
+  <rect x="230" y="215" width="120" height="70" rx="6" fill="#f3f6fb"/>
+  <rect x="365" y="225" width="85" height="60" rx="6" fill="#f3f6fb"/>
+  <rect x="280" y="170" width="8" height="45" fill="#f3f6fb"/>
+  <polygon points="288,176 338,198 288,206" fill="#ffcf5a"/>
+
+  <g stroke="#9ed0ff" stroke-width="2" fill="none" opacity="0.85">
+    <path d="M80 355 C115 345, 155 365, 190 355"/>
+    <path d="M210 372 C245 362, 285 382, 320 372"/>
+    <path d="M350 350 C385 340, 425 360, 460 350"/>
+    <path d="M500 372 C535 362, 575 382, 610 372"/>
+  </g>
+
+  <rect x="535" y="70" width="205" height="160" rx="12" fill="#0f2a4e" stroke="#7ab8ff"/>
+  <text x="637" y="105" text-anchor="middle" fill="#dcecff" font-size="18" font-family="Segoe UI, Tahoma, sans-serif">Titanic ML</text>
+
+  <g transform="translate(555,125)">
+    <rect width="165" height="88" rx="8" fill="#14355f"/>
+    <line x1="14" y1="64" x2="150" y2="64" stroke="#7ab8ff" stroke-width="1"/>
+    <rect x="24" y="44" width="22" height="20" fill="#6fb3ff"/>
+    <rect x="58" y="30" width="22" height="34" fill="#8ac6ff"/>
+    <rect x="92" y="22" width="22" height="42" fill="#b0dbff"/>
+    <rect x="126" y="37" width="22" height="27" fill="#d3ecff"/>
+  </g>
+
+  <text x="60" y="82" fill="#dcecff" font-size="34" font-family="Segoe UI, Tahoma, sans-serif">Survival Prediction</text>
+  <text x="60" y="114" fill="#a8c9ee" font-size="18" font-family="Segoe UI, Tahoma, sans-serif">Classical ML pipeline: EDA, features, benchmarking</text>
+</svg>

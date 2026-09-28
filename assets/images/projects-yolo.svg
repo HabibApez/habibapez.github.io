@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" role="img" aria-label="YOLO project thumbnail">
+  <rect width="800" height="460" fill="#0a192f"/>
+  <circle cx="170" cy="140" r="64" fill="#64ffda" opacity="0.25"/>
+  <rect x="260" y="90" width="420" height="260" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <text x="400" y="245" text-anchor="middle" fill="#ccd6f6" font-size="34" font-family="Inter, Arial, sans-serif">YOLOv8 ADAS Detection</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" role="img" aria-label="Instituto Politecnico Nacional logo badge">
+  <rect width="600" height="180" rx="16" fill="#1f2937"/>
+  <rect x="16" y="16" width="568" height="148" rx="12" fill="#374151" stroke="#f59e0b"/>
+  <text x="36" y="78" fill="#f3f4f6" font-size="28" font-family="Segoe UI, Tahoma, sans-serif">Instituto Politecnico Nacional</text>
+  <text x="36" y="126" fill="#f59e0b" font-size="52" font-weight="700" font-family="Segoe UI, Tahoma, sans-serif">IPN</text>
+</svg>

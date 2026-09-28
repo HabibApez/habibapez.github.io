@@ -1,0 +1,23 @@
+<article class="project-card fade-reveal">
+  {% if project.thumbnail %}
+  <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }} thumbnail">
+  {% endif %}
+  <div class="project-meta">
+    {% if project.status %}<span class="meta-chip">{{ project.status }}</span>{% endif %}
+    {% if project.last_updated %}<span class="meta-chip">Updated {{ project.last_updated }}</span>{% endif %}
+  </div>
+  <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+  <p>{{ project.excerpt }}</p>
+  <div class="tech-tags">
+    {% for item in project.tech_stack %}
+    <span class="tech-tag">{{ item }}</span>
+    {% endfor %}
+  </div>
+  {% if project.github_repo or project.live_demo %}
+  <p>
+    {% if project.github_repo %}<a href="{{ project.github_repo }}" target="_blank" rel="noopener">GitHub Repo</a>{% endif %}
+    {% if project.live_demo and project.live_demo != '#' %} | <a href="{{ project.live_demo }}" target="_blank" rel="noopener">Live Demo</a>{% endif %}
+    {% if project.live_demo == '#' %} | <span>Demo roadmap available in project page</span>{% endif %}
+  </p>
+  {% endif %}
+</article>

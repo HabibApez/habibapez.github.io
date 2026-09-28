@@ -1,0 +1,113 @@
+title: "Habib Apez"
+name: "Habib Alejandro Apez Gonzalez"
+description: "Embedded Systems Engineer | AI Researcher in the Making | Bridging Automotive & Artificial Intelligence"
+url: "https://habibapez.github.io"
+baseurl: ""
+repository: "HabibApez/habibapez.github.io"
+locale: "en-US"
+timezone: "America/Toronto"
+logo: "/assets/images/favicon.svg"
+og_image: "/assets/images/projects-fusion.svg"
+
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "default"
+
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:year/:month/:day/:title/
+
+sass:
+  # Minimal Mistakes 4.x still uses legacy Sass APIs. Hide dependency warnings
+  # while retaining warnings produced by this repository's own SCSS.
+  quiet_deps: true
+
+plugins:
+  - jekyll-include-cache
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jemoji
+
+include:
+  - _pages
+
+# Projects are maintained as standalone Markdown files in _projects.
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+author:
+  name: "Habib Apez"
+  avatar: "/assets/images/favicon.svg"
+  bio: "Sr. ADAS R&D Embedded Software Engineer transitioning into AI/ML."
+  location: "Canada-bound"
+  email: "habibapez@hotmail.com"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin"
+      url: "https://linkedin.com/in/habib-apez"
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/HabibApez"
+
+footer:
+  links:
+    - label: "Email"
+      icon: "fas fa-envelope"
+      url: "mailto:habibapez@hotmail.com"
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin"
+      url: "https://linkedin.com/in/habib-apez"
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/HabibApez"
+
+social:
+  type: Person
+  name: Habib Apez
+  links:
+    - https://github.com/HabibApez
+    - https://linkedin.com/in/habib-apez
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      share: true
+      related: true
+      show_date: true
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: single
+      author_profile: false
+      classes: wide
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+after_footer_scripts:
+  # Lightweight scroll reveal animation.
+  - /assets/js/scroll-fade.js
+
+compress_html:
+  clippings: all
+  ignore:
+    envs: development

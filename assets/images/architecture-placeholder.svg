@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Architecture diagram placeholder">
+  <rect width="1200" height="700" fill="#0a192f"/>
+  <rect x="80" y="110" width="260" height="120" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <rect x="470" y="110" width="260" height="120" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <rect x="860" y="110" width="260" height="120" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <rect x="275" y="360" width="260" height="120" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <rect x="665" y="360" width="260" height="120" rx="14" fill="#13325f" stroke="#64ffda"/>
+  <path d="M340 170h120" stroke="#64ffda" stroke-width="4"/>
+  <path d="M730 170h120" stroke="#64ffda" stroke-width="4"/>
+  <path d="M600 230v100" stroke="#64ffda" stroke-width="4"/>
+  <path d="M400 420h220" stroke="#64ffda" stroke-width="4"/>
+  <text x="210" y="180" fill="#ccd6f6" text-anchor="middle" font-size="24" font-family="Inter, Arial, sans-serif">Input</text>
+  <text x="600" y="180" fill="#ccd6f6" text-anchor="middle" font-size="24" font-family="Inter, Arial, sans-serif">Model</text>
+  <text x="990" y="180" fill="#ccd6f6" text-anchor="middle" font-size="24" font-family="Inter, Arial, sans-serif">Output</text>
+  <text x="405" y="430" fill="#ccd6f6" text-anchor="middle" font-size="24" font-family="Inter, Arial, sans-serif">Validation</text>
+  <text x="795" y="430" fill="#ccd6f6" text-anchor="middle" font-size="24" font-family="Inter, Arial, sans-serif">Monitoring</text>
+</svg>

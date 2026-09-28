@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" role="img" aria-label="Universidad de Colima logo badge">
+  <rect width="600" height="180" rx="16" fill="#052e16"/>
+  <rect x="16" y="16" width="568" height="148" rx="12" fill="#14532d" stroke="#34d399"/>
+  <text x="36" y="78" fill="#ecfdf5" font-size="30" font-family="Segoe UI, Tahoma, sans-serif">Universidad de Colima</text>
+  <text x="36" y="126" fill="#34d399" font-size="52" font-weight="700" font-family="Segoe UI, Tahoma, sans-serif">UCOLIMA</text>
+</svg>

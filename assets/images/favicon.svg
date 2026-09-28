@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="HA favicon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fbfe" />
+      <stop offset="100%" stop-color="#e9f1f8" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f5f8f" />
+      <stop offset="100%" stop-color="#007a69" />
+    </linearGradient>
+  </defs>
+
+  <rect width="200" height="200" rx="34" fill="url(#bg)" />
+  <rect x="8" y="8" width="184" height="184" rx="28" fill="none" stroke="#0f5f8f" stroke-opacity="0.22" stroke-width="2" />
+
+  <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle"
+    fill="#0f2235" font-size="88" font-family="Space Grotesk, IBM Plex Sans, Segoe UI, sans-serif" font-weight="800" letter-spacing="-2">HA</text>
+</svg>
