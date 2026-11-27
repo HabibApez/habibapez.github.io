@@ -1,0 +1,42 @@
+{
+  "updated_at": "2026-12-10",
+  "udi": 8.98,
+  "inf": 3.75,
+  "rates": {
+    "liq": {
+      "g": 6.0,
+      "date": "2026-11-27",
+      "src": "Estimado: tasa objetivo Banxico (6.25%, 27/11/2026) menos ~0.25% de comisión. Verifica en cetesdirecto"
+    },
+    "c28": {
+      "g": 6.2,
+      "date": "2026-11-26",
+      "src": "Banxico SIE (SF43936), subasta 26/11/2026"
+    },
+    "c91": {
+      "g": 6.49,
+      "date": "2026-11-26",
+      "src": "Banxico SIE (SF43939), subasta 26/11/2026"
+    },
+    "c182": {
+      "g": 6.66,
+      "date": "2026-11-26",
+      "src": "Banxico SIE (SF43942), subasta 26/11/2026"
+    },
+    "c364": {
+      "g": 6.88,
+      "date": "2026-11-26",
+      "src": "Banxico SIE (SF43945), subasta 26/11/2026"
+    },
+    "c2y": {
+      "g": 7.87,
+      "date": "2026-11-19",
+      "src": "Banxico SIE (SF349785), subasta 19/11/2026"
+    },
+    "udi": {
+      "g": 3.65,
+      "date": "2026-11-12",
+      "src": "Banxico SIE (SF61592), tasa real 12/11/2026"
+    }
+  }
+}
