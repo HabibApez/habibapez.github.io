@@ -1,0 +1,74 @@
+name: Update Banxico rates (rates-data branch)
+
+on:
+  schedule:
+    # Every Wednesday at 14:00 UTC (after Mexico's weekly Tuesday primary auction)
+    - cron: "0 14 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-banxico-rates
+  cancel-in-progress: false
+
+jobs:
+  update-rates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main (read-only script source)
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/scripts/update_banxico_rates.py
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare isolated rates-data working directory
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          DATA_DIR="/tmp/rates-data"
+          rm -rf "$DATA_DIR"
+          mkdir -p "$DATA_DIR"
+          cd "$DATA_DIR"
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+
+          if git ls-remote --exit-code --heads origin rates-data >/dev/null 2>&1; then
+            git fetch --depth=1 origin rates-data
+            git checkout -q -b rates-data FETCH_HEAD
+          else
+            git checkout -q --orphan rates-data
+          fi
+
+      - name: Fetch Banxico SIE series and generate rates.json
+        id: fetch
+        env:
+          BANXICO_TOKEN: ${{ secrets.BANXICO_TOKEN }}
+        run: |
+          python3 .github/scripts/update_banxico_rates.py \
+            --previous /tmp/rates-data/rates.json \
+            --output /tmp/rates-data/rates.json
+
+      - name: Commit and push to rates-data only if numeric values changed
+        if: steps.fetch.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          cd /tmp/rates-data
+          git add rates.json
+          if git diff --cached --quiet; then
+            echo "No staged changes in rates.json."
+            exit 0
+          fi
+          git commit -m "chore(rates): update Banxico SIE rates (${{ steps.fetch.outputs.updated_at }})"
+          git push origin rates-data

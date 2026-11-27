@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>¿Cuál es la mejor forma de invertir mi liquidación en México? · Simulador gratuito</title>
+<meta name="author" content="Habib Apez">
+<meta name="description" content="Simulador gratuito para distribuir tu liquidación. Descubre la forma más eficiente de repartir tu indemnización entre liquidez inmediata, pago de deudas, escalera de CETES y crecimiento a largo plazo.">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://habibapez.github.io/tools/liquidacion/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="¿Cuál es la mejor forma de invertir mi liquidación en México?">
+<meta property="og:description" content="Simulador gratuito para distribuir tu liquidación entre liquidez inmediata, pago de deudas, escalera de CETES, SOFIPOs y largo plazo.">
+<meta property="og:url" content="https://habibapez.github.io/tools/liquidacion/">
+<meta property="og:image" content="https://habibapez.github.io/assets/images/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="¿Cuál es la mejor forma de invertir mi liquidación en México?">
+<meta name="twitter:description" content="Simulador gratuito para distribuir tu liquidación entre liquidez inmediata, pago de deudas, escalera de CETES, SOFIPOs y largo plazo.">
+<meta name="twitter:image" content="https://habibapez.github.io/assets/images/social-card.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1d2433;--muted:#667085;--line:#e4e7ec;--brand:#0f766e;--warn:#b45309;--bad:#b42318;--info:#1d4ed8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;overflow-x:hidden}
+header{background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;padding:28px 0 54px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+h1{margin:0 0 6px;font-size:clamp(1.45rem,4vw,2.2rem)}
+.sub{opacity:.92;max-width:780px;font-size:.95rem}
+.pill{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);padding:4px 10px;border-radius:999px;font-size:.78rem;margin:10px 6px 0 0}
+.top-by{font-size:.82rem;margin-bottom:10px;opacity:.92;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.top-by a{color:#ccfbf1;text-decoration:none;font-weight:600}
+.top-by a:hover{text-decoration:underline}
+main{margin-top:-34px}
+.grid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:20px;align-items:start}
+.grid>*{min-width:0}
+@media(max-width:960px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(16,24,40,.05);margin-bottom:16px;scroll-margin-top:64px;max-width:100%}
+.card h2{font-size:1.03rem;margin:0 0 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step{background:var(--brand);color:#fff;border-radius:50%;width:24px;height:24px;display:inline-grid;place-items:center;font-size:.8rem;flex-shrink:0}
+label{display:block;font-size:.84rem;color:var(--muted);margin:10px 0 4px}
+label.chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}
+label.chk input{margin-top:3px;flex-shrink:0}
+/* 16px minimum prevents iOS auto-zoom on input focus */
+input[type=number],input[type=text],select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink);scroll-margin-top:80px}
+input.money{font-variant-numeric:tabular-nums}
+input:focus{outline:2px solid #5eead4;outline-offset:1px}
+input[type=range]{width:100%;accent-color:var(--brand)}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg label{flex:1;margin:0;text-align:center;padding:10px 4px;cursor:pointer;color:var(--ink);font-size:.85rem}
+.seg input{display:none}.seg label:has(input:checked){background:#ccfbf1;font-weight:700;color:var(--brand)}
+.debt{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 74px 34px;gap:6px;margin-bottom:6px;align-items:center}
+.debt input{padding:7px 8px}
+.sof{border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:8px;background:#fafafa}
+.sofh{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:6px;margin-bottom:6px}
+.sofg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.sof input,.sof select{padding:7px 8px;font-size:15px}
+.mini{display:block;font-size:.68rem;color:var(--muted);margin-bottom:2px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+button{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;font-size:.85rem;font-family:inherit;color:var(--ink);min-height:36px}
+button.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.hint{font-size:.78rem;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+details{margin-top:12px;border:1px dashed var(--line);border-radius:10px;padding:8px 10px}
+summary{cursor:pointer;font-size:.88rem;color:var(--brand);font-weight:600}
+/* Horizontally scrollable jump navigation on mobile */
+.jump{position:sticky;top:0;z-index:20;display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding:10px 0;background:var(--bg);margin-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+.jump a{font-size:.8rem;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap;flex-shrink:0}
+.jump a.hot{background:#fff7ed;border-color:#fdba74;color:#9a3412;font-weight:700}
+.jump a.ok{background:#f0fdfa;border-color:#99f6e4;color:var(--brand);font-weight:700}
+.jump .cn{background:var(--bad);color:#fff;border-radius:999px;padding:1px 7px;margin-left:4px;font-size:.72rem}
+.jump a.ok .cn{background:var(--brand)}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media(max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 1px 2px rgba(16,24,40,.05);min-width:0}
+.kpi .v{font-size:clamp(1.15rem,3.5vw,1.5rem);font-weight:800;margin:2px 0;overflow-wrap:anywhere}.kpi .l{font-size:.76rem;color:var(--muted)}
+.kpi.hl{background:#f0fdfa;border-color:#99f6e4}
+.strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:12px;padding:10px 14px;margin-bottom:16px;text-decoration:none;font-size:.88rem}
+.strip.ok{background:#f0fdfa;border-color:#99f6e4;color:#115e59}
+.strip b{color:var(--bad)}.strip.ok b{color:var(--brand)}.strip span.go{margin-left:auto;font-weight:700;white-space:nowrap}
+/* Allocation breakdown */
+.bar{display:flex;height:36px;border-radius:10px;overflow:hidden;margin:4px 0 14px;background:#eef2f6}
+.bar div{display:grid;place-items:center;color:#fff;font-size:.75rem;font-weight:700;white-space:nowrap;overflow:hidden;transition:flex .3s}
+.rep-viz{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:center;margin:4px 0 14px;padding:12px;background:#f8fafc;border:1px solid var(--line);border-radius:12px}
+@media(max-width:680px){.rep-viz{grid-template-columns:minmax(0,1fr)}}
+.pie-box{position:relative;height:210px;width:100%;max-width:230px;margin:0 auto}
+.pie-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:.82rem;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
+.pie-head b{color:var(--ink);font-size:.92rem}
+.pie-leg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.pie-it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:8px;font-size:.82rem}
+.pie-it .pl{display:flex;align-items:center;gap:6px;min-width:0}
+.pie-it .pn{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700}
+.pie-it .pp{color:var(--muted);font-weight:500;font-size:.76rem;margin-left:4px}
+.tscroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.03em}
+.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.inst{margin-bottom:6px}.inst:last-child{margin-bottom:0}
+a.why{font-size:.74rem;color:var(--brand);font-weight:600;white-space:nowrap}
+/* Maturity ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:end;height:240px;margin-top:10px}
+.rung{background:#3730a3;color:#fff;border-radius:10px 10px 0 0;font-size:.75rem;padding:8px;display:flex;flex-direction:column;justify-content:flex-end;text-align:center;min-height:110px;transition:height .3s;overflow:hidden}
+.rung b{font-size:1rem;margin:2px 0}
+.rung .rt{font-weight:700}.rung .rm{opacity:.85}
+.rung .rh{font-size:.7rem;color:#e0e7ff;margin-top:4px}
+.rung.empty{background:#f1f5f9;color:#475569;border:1px dashed #cbd5e1}
+.rung.empty .rh{color:#64748b}
+/* Alerts and checklist */
+.card.alerts{border:2px solid #fb923c}
+.card.alerts.clean{border-color:#99f6e4}
+.card.alerts h2{color:#9a3412}
+.card.alerts.clean h2{color:var(--brand)}
+.alert{border-left:4px solid var(--warn);background:#fffbeb;padding:10px 12px;border-radius:8px;margin-bottom:8px;font-size:.87rem}
+.alert.bad{border-color:var(--bad);background:#fef3f2}.alert.ok{border-color:var(--brand);background:#f0fdfa}.alert.must{border-color:var(--info);background:#eff6ff}
+.cnt{font-size:.72rem;padding:2px 8px;border-radius:999px;font-weight:700}
+.cnt.r{background:#fee4e2;color:var(--bad)}.cnt.y{background:#fef0c7;color:#93370d}.cnt.g{background:#ccfbf1;color:var(--brand)}
+.sub-h{font-size:.95rem;font-weight:700;color:var(--ink);margin:16px 0 8px;display:flex;gap:6px;align-items:center}
+/* SOFIPOs */
+.prot{height:8px;background:#eef2f6;border-radius:6px;overflow:hidden;min-width:90px;display:flex}
+.prot i{display:block;height:100%;background:#10b981}.prot i.over{background:var(--bad)}
+td.note{font-size:.8rem;color:#344054;max-width:280px}
+/* Rationale ("Why") section */
+.why-item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;scroll-margin-top:64px}
+.why-item summary{color:var(--ink);font-size:.93rem}
+.why-item p,.why-item li{font-size:.87rem}
+.why-item .src{font-size:.78rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:8px}
+.why-item .src a{color:var(--brand)}
+.rate-in{width:84px!important;padding:5px 6px!important;text-align:right}
+.badge{font-size:.7rem;padding:2px 7px;border-radius:6px;background:#eef2ff;color:#3730a3;font-weight:600}
+.assume{font-size:.82rem;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-top:10px}
+.assume ul{margin:4px 0 0;padding-left:18px}
+.assume a{color:var(--brand);font-weight:600}
+.chart-box{position:relative;height:280px;width:100%}
+footer{font-size:.8rem;color:var(--muted);padding:10px 0 50px}
+footer a{color:var(--brand)}
+.author-box{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--ink);font-size:.84rem}
+.author-box .links{display:flex;gap:12px;flex-wrap:wrap;font-weight:600}
+.author-box a{text-decoration:none}
+.author-box a:hover{text-decoration:underline}
+.btn-pdf{margin-left:auto;background:var(--brand);color:#fff;border-color:var(--brand);border-radius:8px;padding:6px 12px;font-size:.82rem;font-weight:600;min-height:0;white-space:nowrap;flex-shrink:0}
+.btn-pdf:hover{background:#115e59}
+.print-only,.print-chart{display:none}
+.chart-fb{display:grid;place-items:center;height:100%;text-align:center;color:var(--muted);font-size:.82rem;padding:12px;border:1px dashed var(--line);border-radius:10px;background:#f8fafc}
+
+/* ============ PRINT / PDF EXPORT ============ */
+@media print{
+  @page{size:letter;margin:10mm}
+  html,body{overflow:visible!important;height:auto!important;background:#fff;font-size:10.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  header{padding:10px 0 12px}
+  header .sub{font-size:.85rem}
+  header .pill{margin-top:6px;font-size:.7rem;padding:2px 8px}
+  main{margin-top:8px}
+  .top-by,#inputs,.jump,.strip,.btn-pdf,.why,#proyeccion label,#proyeccion input,#porque,#tasas,.author-box .links{display:none!important}
+  .print-only{display:block!important}
+  .grid{display:block}
+  .card{box-shadow:none;margin-bottom:8px;padding:10px;border-radius:10px}
+  .card h2,.sub-h{break-after:avoid;page-break-after:avoid;margin-bottom:6px}
+  .kpi,.alert,.rep-viz,.chart-box,.assume,.author-box,tr,.rung{break-inside:avoid;page-break-inside:avoid}
+  .kpis{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px;margin-bottom:8px}
+  .kpi{box-shadow:none;padding:8px}
+  .rep-viz{grid-template-columns:165px minmax(0,1fr)!important;gap:12px;padding:8px;margin:4px 0 8px}
+  .pie-box{height:auto!important;max-width:165px;text-align:center}
+  .chart-box{height:auto!important;width:100%;margin-bottom:8px;text-align:center}
+  .pie-box canvas,.chart-box canvas{display:none!important}
+  .pie-box .print-chart{display:block!important;width:155px!important;height:auto!important;max-height:155px!important;margin:0 auto;object-fit:contain}
+  .chart-box .print-chart{display:block!important;width:100%!important;height:auto!important;max-height:200px!important;margin:0 auto;object-fit:contain}
+  .ladder{height:155px;margin-top:6px}
+  .alert{padding:6px 9px;margin-bottom:5px;font-size:.82rem}
+  th,td{padding:5px 4px}
+  footer{padding:6px 0 0;font-size:.74rem}
+}
+
+/* ============ MOBILE: stacked controls and card-style tables ============ */
+@media(max-width:640px){
+  header{padding:22px 0 46px}
+  .card{padding:14px}
+  .row{flex-direction:column;gap:0}
+  .btns{grid-template-columns:1fr}
+  .debt.hint{display:none}
+  .debt{grid-template-columns:1fr 1fr 34px;background:#fafafa;border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:8px}
+  .debt input[data-k="n"]{grid-column:1/3}
+  .debt button{grid-column:3;grid-row:1}
+  .debt input[data-k="s"]{grid-column:1}
+  .debt input[data-k="r"]{grid-column:2/4}
+  .sofg{grid-template-columns:1fr 1fr}
+  .sofg>div:last-child{grid-column:1/-1}
+  .ladder{grid-template-columns:repeat(2,minmax(0,1fr));height:auto}
+  .rung,.rung.empty{height:auto!important;min-height:112px;border-radius:10px}
+  .chart-box{height:230px}
+  /* Responsive tables without horizontal scroll: each row becomes a card */
+  table.rtable,table.rtable tbody,table.rtable tr,table.rtable td{display:block;width:100%}
+  table.rtable thead{display:none}
+  table.rtable tr{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:#fcfcfd}
+  table.rtable td{border:0;padding:4px 0;text-align:left!important;white-space:normal;max-width:none}
+  table.rtable td[data-label]{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  table.rtable td[data-label]::before{content:attr(data-label);font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;flex-shrink:0}
+  table.rtable td.cell-main{font-size:.93rem;padding-bottom:6px;margin-bottom:4px;border-bottom:1px dashed var(--line)}
+  table.rtable td.cell-block{padding-top:6px;margin-top:4px;border-top:1px dashed var(--line)}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top-by"><a href="/">← habibapez.github.io</a><span>·</span><a href="/tools/">Tools</a></div>
+  <h1>¿Cuál es la mejor forma de invertir mi liquidación en México?</h1>
+  <div class="sub">Simulador gratuito para distribuir tu liquidación. Descubre la forma más eficiente de repartir tu indemnización entre liquidez inmediata, pago de deudas, escalera de CETES y crecimiento a largo plazo.</div>
+  <span class="pill">🔒 Gratis · sin registro · tus datos no salen de tu navegador</span>
+  <span class="pill" id="ratesPill">📈 Tasas de Banxico al 19/11/2026</span>
+  <span class="pill">📚 Cada recomendación con su porqué y su fuente</span>
+</div></header>
+
+<main class="wrap"><div class="grid">
+<aside id="inputs">
+  <div class="card"><h2><span class="step">1</span>Tu dinero disponible</h2>
+    <label for="monto">Monto neto de tu liquidación (lo que recibiste o vas a recibir)</label>
+    <input type="text" inputmode="numeric" class="money" id="monto" value="250,000">
+    <details><summary>¿No sabes cuánto te toca? Haz un cálculo aproximado</summary>
+      <div class="row">
+        <div><label>Salario mensual bruto</label><input type="text" inputmode="numeric" class="money" id="lSal" value="25,000"></div>
+        <div><label>Antigüedad (años)</label><input type="number" id="lAnios" value="4" step="0.5"></div>
+      </div>
+      <div id="lOut" class="hint" style="margin-top:8px"></div>
+      <button class="primary" id="lUse" style="margin-top:8px">Usar este monto</button>
+    </details>
+    <label for="ahorro">Ahorro que ya tienes y puedes usar (sin contar tu Afore)</label>
+    <input type="text" inputmode="numeric" class="money" id="ahorro" value="30,000">
+    <label for="ahorroR">¿Cuánto te rinde hoy ese ahorro? (% anual)</label>
+    <input type="number" id="ahorroR" value="3" step="0.1">
+    <label class="chk"><input type="checkbox" id="ahorroIn" checked> Repartirlo junto con mi liquidación</label>
+    <div class="hint">Si lo desmarcas, tu ahorro se queda donde está y solo se usa cuando se acaben el efectivo y el colchón.</div>
+  </div>
+
+  <div class="card"><h2><span class="step">2</span>Tus gastos mensuales</h2>
+    <div class="row">
+      <div><label>Gastos fijos</label><input type="text" inputmode="numeric" class="money" id="fijos" value="15,000"></div>
+      <div><label>Gastos variables</label><input type="text" inputmode="numeric" class="money" id="var" value="5,000"></div>
+    </div>
+    <div class="hint">Incluye renta, comida, servicios y las mensualidades de tus créditos hipotecario y automotriz. No incluyas las tarjetas que vas a liquidar.</div>
+    <label>Otros ingresos del hogar (pareja, rentas, trabajos independientes)</label>
+    <input type="text" inputmode="numeric" class="money" id="otros" value="0">
+    <label>¿Cuántos meses crees que tardarás en encontrar trabajo? <b id="mesesV"></b></label>
+    <input type="range" id="meses" min="3" max="18" value="6">
+    <label for="post">Cuando tengas trabajo de nuevo, ¿cuánto podrás ahorrar al mes?</label>
+    <input type="text" inputmode="numeric" class="money" id="post" value="2,500">
+    <div class="hint" id="postHint"></div>
+  </div>
+
+  <div class="card"><h2><span class="step">3</span>Tus deudas</h2>
+    <div class="debt hint"><span>Nombre</span><span>Saldo</span><span>Tasa %</span><span></span></div>
+    <div id="debts"></div>
+    <div class="btns">
+      <button data-add="card">+ Tarjeta de crédito</button>
+      <button data-add="auto">+ Crédito automotriz</button>
+      <button data-add="hip">+ Crédito hipotecario</button>
+      <button data-add="pers">+ Préstamo personal</button>
+    </div>
+    <div class="hint">La tasa de interés anual aparece en tu estado de cuenta o en tu contrato. Los créditos automotriz e hipotecario casi siempre quedan debajo del límite de deuda cara: no se adelantan y su mensualidad va en tus gastos fijos. <a class="why" href="#why-deudas">¿Por qué?</a></div>
+    <label>Se considera "deuda cara" si su tasa anual es de al menos (%)</label>
+    <input type="number" id="umbral" value="20">
+  </div>
+
+  <div class="card"><h2><span class="step">4</span>SOFIPOs <span class="hint" style="margin:0">(opcional)</span></h2>
+    <div class="hint" style="margin-bottom:8px">Agrega las SOFIPOs que estás considerando y la tasa que te ofrecen hoy. El simulador solo las usa si pagan más que la opción del gobierno al mismo plazo (BONDDIA o CETES) y si el dinero está disponible cuando lo vas a necesitar. <a class="why" href="#why-sofipo">¿Por qué?</a></div>
+    <div id="sofs"></div>
+    <button id="addSof">+ Agregar SOFIPO</button>
+    <label class="chk"><input type="checkbox" id="protect" checked> No poner en cada SOFIPO más del monto protegido (25,000 UDIS ≈ <span id="capTxt"></span>)</label>
+  </div>
+
+  <div class="card"><h2><span class="step">5</span>Salud y perfil</h2>
+    <label class="chk"><input type="checkbox" id="salud" checked> Voy a pagar seguro médico mientras no tenga empleo (costo mensual)</label>
+    <input type="text" inputmode="numeric" class="money" id="saludCosto" value="2,500">
+    <div class="hint">El IMSS te sigue cubriendo unas 8 semanas después de la baja. <a class="why" href="#why-salud">¿Por qué?</a></div>
+    <label>Efectivo disponible de inmediato</label>
+    <select id="mesesEf">
+      <option value="1">1 mes de gastos</option>
+      <option value="2" selected>2 meses de gastos</option>
+      <option value="3">3 meses de gastos</option>
+    </select>
+    <label>¿Cómo invertir lo que sobra a largo plazo?</label>
+    <div class="seg">
+      <label><input type="radio" name="perfil" value="cons">Conservador</label>
+      <label><input type="radio" name="perfil" value="bal" checked>Balanceado</label>
+      <label><input type="radio" name="perfil" value="crec">Crecimiento</label>
+    </div>
+  </div>
+</aside>
+
+<section>
+  <nav class="jump">
+    <a href="#reparto">💧 Reparto</a>
+    <a href="#alertas" class="hot" id="jumpAl">⚠️ Alertas <span class="cn" id="nAl"></span></a>
+    <a href="#escalera">🪜 Escalera</a>
+    <a href="#sofipos">🏦 SOFIPOs</a>
+    <a href="#proyeccion">📊 Proyección</a>
+    <a href="#porque">📚 Por qué</a>
+    <a href="#tasas">📈 Tasas</a>
+  </nav>
+
+  <div class="card print-only" id="printMeta"></div>
+
+  <div class="kpis">
+    <div class="kpi hl"><div class="l">Meses que aguantas sin ingresos</div><div class="v" id="kRun"></div><div class="l" id="kRun2"></div></div>
+    <div class="kpi"><div class="l">Deuda cara que liquidas</div><div class="v" id="kDebt"></div><div class="l" id="kDebt2"></div></div>
+    <div class="kpi"><div class="l">Intereses que dejas de pagar al año</div><div class="v" id="kSave"></div><div class="l">Un rendimiento seguro</div></div>
+    <div class="kpi"><div class="l">Patrimonio en 3 años <span id="kNWl"></span></div><div class="v" id="kNW"></div><div class="l" id="kNW2"></div></div>
+  </div>
+  <a class="strip" href="#alertas" id="strip"></a>
+
+  <div class="card" id="reparto"><h2><span>💧 Cómo repartir tu dinero</span><button type="button" class="btn-pdf" id="btnPdf" title="Guardar o imprimir tu plan como PDF">📄 Descargar PDF</button></h2>
+    <div class="rep-viz">
+      <div class="pie-box"><canvas id="pieChart"></canvas></div>
+      <div>
+        <div class="pie-head"><span>Distribución del capital total</span><b id="pieTot"></b></div>
+        <div class="bar" id="bar" style="margin:0 0 10px"></div>
+        <div class="pie-leg" id="pieLeg"></div>
+      </div>
+    </div>
+    <table class="rtable">
+      <thead><tr><th>Destino</th><th class="n">Monto</th><th>Dó<span id="retTxt">0.90%</span> anual sobre el capitalsa bruta</th><th class="n">Neta*</th><th>Disponibilidad</th></tr></thead>
+      <tbody id="tbl"></tbody>
+    </table>
+    <div class="hint">*Neta = tasa bruta − retención de ISR de 0.90% anual sobre el capital (2026). Las SOFIPOs no tienen retención mientras no rebases el monto exento. En las deudas, la tasa es lo que dejas de pagar. En bolsa (S&amp;P 500 / ETFs) no se garantiza ningún rendimiento. <a class="why" href="#why-isr">¿Por qué?</a> · <a class="why" href="#why-sp500">¿Por qué no meter todo al S&amp;P 500?</a></div>
+  </div>
+
+  <div class="card alerts" id="alertas">
+    <h2 id="alH"><span id="alTitle">⚠️ Alertas de tu simulación</span> <span class="cnt r" id="cntR"></span><span class="cnt y" id="cntY"></span></h2>
+    <div class="hint" style="margin:-4px 0 8px">Las alertas solo aparecen cuando tus números detectan un problema (por ejemplo, si el colchón no alcanza o rebasas el monto protegido). Lo que aplica a cualquier despido está abajo como reglas básicas.</div>
+    <div id="alerts"></div>
+    <div class="sub-h">📌 Reglas básicas en cualquier despido (siempre aplican)</div>
+    <div id="musts"></div>
+  </div>
+
+  <div class="card" id="escalera"><h2>🪜 Tu colchón, escalonado según cuándo lo necesitas</h2>
+    <div class="hint">Cada escalón vence cuando vas a necesitar ese dinero: así ganas más tasa sin quedarte sin liquidez. <a class="why" href="#why-colchon">¿Por qué?</a></div>
+    <div class="ladder" id="ladder"></div>
+  </div>
+
+  <div class="card" id="sofipos"><h2>🏦 Tus SOFIPOs</h2><div id="sofOut"></div></div>
+
+  <div class="card" id="proyeccion"><h2>📊 Proyección a 3 años</h2>
+    <label>Prueba de estrés: ¿y si en realidad tardas <b id="stressV"></b> meses en encontrar trabajo?</label>
+    <input type="range" id="stress" min="1" max="24" value="6">
+    <label class="chk"><input type="checkbox" id="real" checked> Mostrar en pesos de hoy (descontando la inflación)</label>
+    <div class="chart-box"><canvas id="chart"></canvas></div>
+    <div class="assume"><b>Qué supone la proyección</b>
+      <ul>
+        <li><b>Mientras buscas trabajo:</b> cada mes sacas tus gastos del efectivo, luego del colchón, luego de tu ahorro no repartido y, como último recurso, del largo plazo.</li>
+        <li><b>Cuando encuentras trabajo</b> (línea punteada): tu nuevo sueldo cubre tus gastos y ahorras <b id="postV"></b> al mes, <span id="postSrc"></span> (<a href="#post">cámbialo en el paso 2</a>). Ese ahorro paga primero la deuda cara que quede, después rellena tu fondo de emergencia hasta 3 meses de gastos y el resto va al largo plazo.</li>
+        <li><b>Sin plan:</b> la liquidación se queda en una cuenta sin rendimiento, tu ahorro sigue donde está, solo pagas los intereses de tus deudas caras y el ahorro mensual se acumula en efectivo.</li>
+      </ul>
+      <a class="why" href="#why-proy">Más detalle →</a>
+    </div>
+  </div>
+
+  <div class="card" id="porque"><h2>📚 Por qué este plan: la lógica detrás de cada número</h2>
+    <div class="hint">El simulador sigue un orden de prioridades que usan los planificadores financieros: primero liquidez y protección, después eliminar costos y al final crecimiento. Abre cada paso para ver el razonamiento y la fuente.</div>
+
+    <details class="why-item" id="why-revisar"><summary>0 · Revisa tu liquidación antes de firmar</summary>
+      <p>Por despido injustificado, la ley marca <b>3 meses de salario</b> (art. 48 LFT), <b>20 días por año</b> cuando no hay reinstalación (art. 50) y una <b>prima de antigüedad</b> de 12 días por año, con tope de 2 salarios mínimos (art. 162). La parte que no paga ISR es de hasta <b>90 UMA por año trabajado</b> (art. 93, fr. XIII, LISR).</p>
+      <p>Tienes <b>2 meses</b> desde el despido para reclamar (art. 518 LFT). Si firmas un monto menor, recuperarlo es difícil. La PROFEDET revisa tu caso gratis.</p>
+      <div class="src">Fuentes: <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf" target="_blank" rel="noopener">Ley Federal del Trabajo</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf" target="_blank" rel="noopener">Ley del ISR</a> · <a href="https://www.inegi.org.mx/temas/uma/" target="_blank" rel="noopener">INEGI – UMA 2026</a> · <a href="https://www.gob.mx/profedet" target="_blank" rel="noopener">PROFEDET</a></div>
+    </details>
+
+    <details class="why-item" id="why-ef"><summary>1 · Efectivo inmediato (1 a 3 meses de gastos)</summary>
+      <p>Los primeros gastos y los imprevistos llegan antes de que se venzan tus inversiones. Por eso una parte debe estar donde puedas sacarla <b>el mismo día</b>.</p>
+      <p>La opción del gobierno es <b>BONDDIA</b>, el fondo de liquidez diaria de cetesdirecto: invierte en valores gubernamentales y puedes retirar el mismo día hábil. Si agregas una SOFIPO con liquidez diaria que pague más, el simulador la usa en su lugar, hasta el monto protegido.</p>
+      <p>Condusef recomienda guardar el fondo de emergencia en instituciones formales, en productos de disponibilidad inmediata y <b>separado del dinero de uso diario</b>.</p>
+      <div class="src">Fuentes: <a href="https://www.gob.mx/condusef/articulos/fondo-de-emergencia-tu-mejor-aliado-en-los-momentos-dificiles" target="_blank" rel="noopener">Condusef – Fondo de emergencia: tu mejor aliado en los momentos difíciles (2026)</a> · <a href="https://www.cetesdirecto.com" target="_blank" rel="noopener">cetesdirecto (BONDDIA)</a></div>
+    </details>
+
+    <details class="why-item" id="why-salud"><summary>Salud: por qué el seguro médico se suma a tus gastos</summary>
+      <p>Si cotizaste al menos 8 semanas seguidas, el IMSS te sigue dando atención médica <b>8 semanas después de la baja</b> (conservación de derechos, art. 109 LSS). Después de eso, una enfermedad o un accidente sin seguro puede acabarse la liquidación. Por eso el costo de un seguro médico, o de la continuación voluntaria en el IMSS (art. 218 LSS), se cuenta como gasto mensual.</p>
+      <div class="src">Fuente: <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf" target="_blank" rel="noopener">Ley del Seguro Social</a></div>
+    </details>
+
+    <details class="why-item" id="why-deudas"><summary>2 · Liquidar deudas caras, de la más cara a la más barata</summary>
+      <p>Pagar una deuda es como invertir a la misma tasa que esa deuda cobra, <b>con rendimiento garantizado y sin impuestos</b>. Liquidar $35,000 de una tarjeta al 58% te ahorra unos $20,300 al año. Ningún instrumento seguro paga eso: hoy los CETES rinden entre 6 y 8%.</p>
+      <p>Se pagan de la tasa más alta a la más baja (<b>método avalancha</b>), porque es el orden que minimiza el total de intereses.</p>
+      <p><b>¿Por qué no adelantar el crédito automotriz o hipotecario?</b> Su tasa suele estar entre 10 y 17%, muy por debajo de una tarjeta. Mientras no tienes ingresos, lo más importante es la liquidez: el dinero que usas para adelantar un crédito ya no regresa si lo necesitas, y su mensualidad ya está dentro de tus gastos. Con trabajo estable, adelantarlos podría convenir. Si tu hipoteca es de Infonavit, pregunta por la prórroga de pagos por pérdida de empleo.</p>
+      <p><b>Consejo:</b> no canceles la tarjeta. Déjala en $0 como respaldo para emergencias y para conservar tu historial crediticio.</p>
+      <div class="src">Fuentes: <a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es" target="_blank" rel="noopener">Banxico SIE – Resultados de la subasta de valores gubernamentales</a> · <a href="https://portalmx.infonavit.org.mx/" target="_blank" rel="noopener">Infonavit</a></div>
+    </details><span id="whyC28">6.19%</span> y a 364 días <span id="whyC364">6.95%</span>
+
+    <details class="why-item" id="why-colchon"><summary>3 · Colchón para los meses de búsqueda, en escalera de CETES</summary>
+      <p>Cada mes de gastos se invierte en el plazo que <b>vence justo antes de que lo necesites</b>. Esto se llama calce de plazos. Como los plazos más largos pagan más (hoy CETES a 28 días rinde 6.19% y a 364 días 6.95%), ganas más tasa sin arriesgarte a vender antes de tiempo.</p>
+      <p>Los CETES están respaldados por el <b>Gobierno Federal</b> y se compran sin comisiones en cetesdirecto. Condusef recomienda un fondo de 3 a 6 meses de gastos fijos. Si ya te quedaste sin empleo, conviene apuntar al rango alto, según cuánto tardan los empleos en tu sector.</p>
+      <div class="src">Fuentes: <a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es" target="_blank" rel="noopener">Banxico SIE (tasas y respaldo de los CETES)</a> · <a href="https://www.cetesdirecto.com" target="_blank" rel="noopener">cetesdirecto</a> · <a href="https://www.gob.mx/condusef/articulos/fondo-de-emergencia-tu-mejor-aliado-en-los-momentos-dificiles" target="_blank" rel="noopener">Condusef</a></div>
+    </details>
+
+    <details class="why-item" id="why-sofipo"><summary>SOFIPOs: cuándo las usa el simulador y con qué límites</summary>
+      <p>Las SOFIPOs suelen pagar más que los CETES, pero tienen más riesgo. Su seguro (Prosofipo) protege hasta <b>25,000 UDIS por persona en cada SOFIPO</b>, siempre que esté autorizada por la CNBV. Por eso el simulador:</p>
+      <ul>
+        <li>Compara cada SOFIPO contra <b>la opción del gobierno al mismo plazo</b>: BONDDIA para el dinero que necesitas de inmediato, CETES a 28, 91, 182 o 364 días para el colchón y CETES a 2 años para el largo plazo. Solo la usa si su tasa neta es mayor.</li>
+        <li>Solo usa una SOFIPO si su plazo no es más largo que el momento en que necesitarás el dinero.</li>
+        <li>No pone en ninguna SOFIPO más del monto protegido, salvo que lo desactives. Si quieres invertir más, reparte entre varias.</li>
+        <li>Respeta el <b>tope</b> de las tasas promocionales: muchas SOFIPOs pagan la tasa alta solo hasta cierto monto.</li>
+      </ul>
+      <p><b>Impuestos:</b> los intereses de SOFIPO están exentos de ISR mientras tu saldo no pase de 5 salarios mínimos anuales (art. 93, fr. XX, inciso b, LISR). Hay debate sobre si ese límite se mide en UMA (≈$214,000) o en salarios mínimos (≈$575,000). Puedes elegir el criterio en "Tasas y supuestos".</p>
+      <p>Antes de invertir, verifica que la SOFIPO esté autorizada en el padrón de la CNBV y revisa su información en Condusef.</p>
+      <div class="src">Fuentes: <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LACP.pdf" target="_blank" rel="noopener">Ley de Ahorro y Crédito Popular (seguro de depósitos)</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf" target="_blank" rel="noopener">LISR art. 93</a> · <a href="https://siemprealdia.co/mexico/fiscal/retencion-de-isr-en-intereses-bancarios/" target="_blank" rel="noopener">SiempreAlDía – exención UMA vs. salario mínimo</a> · <a href="https://www.gob.mx/cnbv" target="_blank" rel="noopener">CNBV</a> · <a href="https://www.gob.mx/condusef" target="_blank" rel="noopener">Condusef</a></div>
+    </details>
+
+    <details class="why-item" id="why-lp"><summary>4 · Largo plazo: solo lo que sobra (renta fija + S&amp;P 500)</summary>
+      <p>Solo se invierte a largo plazo lo que queda <b>después</b> de cubrir liquidez, salud, deudas caras y el colchón. Lo que puedas necesitar pronto no debe estar en instrumentos que pueden bajar de valor.</p>
+      <ul>
+        <li><b>Udibonos (renta fija real):</b> su valor se ajusta con la inflación, así que protegen tu poder de compra (Banxico). Se compran en cetesdirecto.</li>
+        <li><b>CETES a 2 años (renta fija nominal):</b> tasa fija conocida desde el inicio.</li>
+        <li><b>Fondo indexado de bolsa / ETF del S&amp;P 500 (renta variable):</b> p. ej. <code>VOO</code>, <code>IVV</code>, <code>VUAA</code> o <code>IVVPESO</code> en una casa de bolsa regulada. Tiene el mayor rendimiento esperado a largo plazo, pero puede caer 20 a 35% en un mal año. Pon ahí solo dinero que no vas a necesitar en 5 años o más. El 10% anual es un supuesto editable, no una promesa.</li>
+      </ul>
+      <p>Los perfiles del paso 5 reparten este bloque de largo plazo: <b>Conservador</b> (0% en bolsa: 50% CETES 2 años + 50% Udibonos), <b>Balanceado</b> (<b>40% en S&amp;P 500</b> + 30% CETES 2 años + 30% Udibonos) y <b>Crecimiento</b> (<b>60% en S&amp;P 500</b> + 25% Udibonos + 15% CETES 2 años).</p>
+      <div class="src">Fuentes: <a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es" target="_blank" rel="noopener">Banxico SIE (definición de Udibonos)</a> · <a href="https://www.gob.mx/condusef/articulos/ahorro-y-rendimientos-2026" target="_blank" rel="noopener">Condusef – Ahorro y rendimientos 2026</a></div>
+    </details>
+
+    <details class="why-item" id="why-sp500"><summary>¿Por qué los bloques 1 a 3 usan solo deuda fija (BONDDIA, CETES, SOFIPOs) si el S&amp;P 500 rinde más a largo plazo?</summary>
+      <p><b>Sí: a 7–15+ años la renta variable (como un ETF del S&amp;P 500) históricamente supera a la deuda fija.</b> De hecho, la herramienta <b>sí incluye renta variable</b> en el <b>bloque 4 (Largo plazo)</b>: asigna 40% al fondo indexado de bolsa en perfil Balanceado y 60% en perfil Crecimiento.</p>
+      <p>Lo que la herramienta <b>nunca</b> mete a renta variable son los bloques 1 y 3 (tu efectivo inmediato y tu colchón de desempleo de 3 a 18 meses). Hay cinco razones financieras técnicas:</p>
+      <ul>
+        <li><b>1. Riesgo de secuencia de retornos (Sequence-of-Returns Risk):</b> el S&amp;P 500 rinde ~10% anual <i>en promedio de largo plazo</i>, pero en años individuales ha caído <b>−18% (2022)</b>, <b>−34% en un mes (marzo 2020)</b> o <b>−37% (2008)</b>. Cuando no tienes empleo, tienes que vender cada mes para pagar renta y comida. Si la bolsa cae −25% en tus primeros 3 meses sin trabajo, cada retiro mensual liquida acciones baratas y cristaliza pérdidas irreversibles: tu colchón de 6 meses se convierte en 4.5 meses justo cuando el mercado laboral suele estar peor.</li>
+        <li><b>2. Calce de plazos (Asset–Liability Matching):</b> un pasivo con fecha cierta a 30, 90 o 180 días (tu renta del próximo mes) debe cubrirse con un activo cuyo valor nominal en pesos esté garantizado en esa misma fecha. La renta variable tiene una duración implícita de <b>5 a 10+ años</b>; usarla para gastos de los próximos 6 meses rompe el calce de plazos.</li>
+        <li><b>3. Riesgo cambiario (USD/MXN) en el corto plazo:</b> el S&amp;P 500 cotiza en dólares (o en pesos sujetos al tipo de cambio, salvo ETFs con cobertura como <code>IVVPESO</code> que tienen costo de cobertura). Tus gastos tras un despido en México son en pesos: si el peso se aprecia 10% en 4 meses aunque el S&amp;P 500 no baje en dólares, tu colchón en pesos vale 10% menos.</li>
+        <li><b>4. Costo de oportunidad real en México:</b> en EE. UU. durante años las tasas cortas pagaron ~0–1%, pero en México los CETES y BONDDIA pagan entre <b>6% y 7%</b> con inflación cercana a 4% (tasa real positiva de ~2–3% sin volatilidad). El premio adicional esperado de la bolsa (~2–3 puntos anuales extra) no compensa el riesgo de quedarte sin liquidez a mitad del desempleo.</li>
+        <li><b>5. Fricción fiscal y operativa:</b> en CETES/BONDDIA no hay comisión de compraventa ni riesgo de precio al vencimiento; en ETFs hay <i>spread</i> de compra-venta, comisión de corretaje e impuesto de 10% sobre ganancias de capital al vender (art. 129 LISR).</li>
+      </ul>
+      <p><b>Regla del simulador:</b> cada peso que puedes necesitar en los próximos 3 a 18 meses va a <b>deuda fija</b> (comprarte tiempo con certeza); cada peso que <b>sobra</b> después de blindar tu desempleo sí puede ir al <b>S&amp;P 500 / renta variable</b> para crecer a largo plazo.</p>
+      <div class="src">Fuentes: <a href="https://www.gob.mx/condusef/articulos/fondo-de-emergencia-tu-mejor-aliado-en-los-momentos-dificiles" target="_blank" rel="noopener">Condusef – Fondo de emergencia</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf" target="_blank" rel="noopener">LISR art. 129 (enajenación de acciones en bolsa)</a></div>
+    </details>
+
+    <details class="why-item" id="why-isr"><summary>Impuestos: cómo se calcula la tasa neta</summary>
+      <p>En 2026, bancos, casas de bolsa y cetesdirecto retienen <b>0.90% anual sobre el capital</b>, no sobre la ganancia (art. 24 LIF 2026). Por eso la tasa neta que muestra el simulador es la tasa bruta menos 0.90 puntos.</p>
+      <p>La retención es un pago provisional. El impuesto definitivo se calcula en la declaración anual sobre el <b>interés real</b>, es decir, descontando la inflación (art. 134 LISR), así que la tasa neta es una aproximación. Para 2027 el Congreso aprobó 0.68%, pero aún no se publica en el DOF.</p>
+      <div class="src">Fuentes: <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LIF_2026.pdf" target="_blank" rel="noopener">Ley de Ingresos de la Federación 2026</a> · <a href="https://siemprealdia.co/mexico/fiscal/retencion-de-isr-en-intereses-bancarios/" target="_blank" rel="noopener">SiempreAlDía – Retención de ISR en intereses 2026</a></div>
+    </details>
+
+    <details class="why-item" id="why-afore"><summary>Afore: por qué solo como último recurso</summary>
+      <p>Puedes hacer un retiro parcial por desempleo de tu Afore (art. 191 LSS), pero <b>te descuenta semanas cotizadas</b> (art. 198 LSS), que necesitas para tener derecho a una pensión. Úsalo solo si ya se acabaron las demás opciones.</p>
+      <div class="src">Fuentes: <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf" target="_blank" rel="noopener">Ley del Seguro Social</a> · <a href="https://www.gob.mx/consar" target="_blank" rel="noopener">CONSAR</a></div>
+    </details>
+
+    <details class="why-item" id="why-proy"><summary>Supuestos de la proyección y de "meses que aguantas"</summary>
+      <ul>
+        <li><b>Rendimientos:</b> cada parte crece mes a mes con su tasa neta. La inflación esperada se usa para mostrar el resultado en pesos de hoy.</li>
+        <li><b>Mientras buscas trabajo:</b> sacas tus gastos en este orden: efectivo y colchón, luego tu ahorro no repartido y al final el largo plazo. Si quedó deuda cara sin liquidar, pagas sus intereses cada mes.</li>
+        <li><b>Cuando encuentras trabajo:</b> se supone que tu nuevo sueldo cubre todos tus gastos y que ahorras la cantidad del campo "¿cuánto podrás ahorrar al mes?" (paso 2). Si no lo cambias, se usa el 10% del salario que aparece en la calculadora del paso 1, que es el mínimo que sugiere Condusef. Ese ahorro paga primero la deuda cara pendiente, luego rellena tu fondo de emergencia hasta 3 meses de gastos (el mínimo que recomienda Condusef) y el resto va a largo plazo. No se suponen aumentos de sueldo ni gastos extraordinarios.</li>
+        <li><b>Sin plan:</b> la liquidación queda en una cuenta sin rendimiento, tu ahorro sigue donde está y solo pagas los intereses de las deudas caras. Cuando vuelves a trabajar, tu ahorro mensual se acumula en efectivo.</li>
+        <li><b>Meses que aguantas:</b> cuántos meses alcanzan el efectivo y el colchón (más tu ahorro no repartido) para cubrir tus gastos, incluyendo lo que rinden mientras tanto.</li>
+      </ul>
+      <div class="src">Fuente del 10%: <a href="https://www.gob.mx/condusef/articulos/fondo-de-emergencia-tu-mejor-aliado-en-los-momentos-dificiles" target="_blank" rel="noopener">Condusef – Fondo de emergencia (2026)</a></div>
+    </details>
+  </div>
+
+  <div class="card" id="tasas"><h2>📈 Tasas y supuestos <span class="badge">actualizadas desde Banxico · editables</span></h2>
+    <table class="rtable"><thead><tr><th>Instrumento</th><th class="n">Tasa anual %</th><th>Fuente</th></tr></thead><tbody id="rates"></tbody></table>
+    <div class="row" style="margin-top:6px">
+      <div><label>Inflación esperada %</label><input type="number" id="pInf" value="4.0" step="0.1"></div>
+      <div><label>Retención ISR % (2026)</label><input type="number" id="pRet" value="0.90" step="0.01"></div>
+      <div><label>Valor UDI (aprox.)</label><input type="number" id="pUdi" value="8.6" step="0.01"></div>
+    </div>
+    <label>Monto exento de ISR en SOFIPOs</label>
+    <select id="pEx">
+      <option value="uma" selected>5 UMA anuales ≈ $214,000 (criterio conservador)</option>
+      <option value="sm">5 salarios mínimos anuales ≈ $575,000 (texto literal de la ley)</option>
+      <option value="none">Sin exención</option>
+    </select>
+    <div class="hint" id="ratesStale" hidden style="color:var(--warn)"></div>
+    <div class="hint">Tasas actualizadas automáticamente cada semana desde la API del SIE de Banxico. BONDDIA se estima a partir de la tasa objetivo de Banxico menos comisión; verifica el rendimiento vigente en cetesdirecto. Puedes editar cualquier tasa o supuesto para probar otros escenarios.</div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <p><b>Aviso:</b> herramienta educativa. No es asesoría financiera, fiscal ni legal. Los resultados son estimaciones basadas en los supuestos que aparecen arriba. Las SOFIPOs que agregas las eliges tú: el simulador no recomienda instituciones. Antes de firmar tu finiquito, consulta a la <a href="https://www.gob.mx/profedet" target="_blank" rel="noopener">PROFEDET</a> (es gratis).</p>
+  <p>Fuentes: <a href="https://www.banxico.org.mx/SieInternet/" target="_blank" rel="noopener">Banxico SIE</a> · <a href="https://www.cetesdirecto.com" target="_blank" rel="noopener">cetesdirecto</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LIF_2026.pdf" target="_blank" rel="noopener">LIF 2026</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf" target="_blank" rel="noopener">LFT</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf" target="_blank" rel="noopener">LISR</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf" target="_blank" rel="noopener">LSS</a> · <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LACP.pdf" target="_blank" rel="noopener">LACP</a> · <a href="https://www.gob.mx/condusef" target="_blank" rel="noopener">Condusef</a> · <a href="https://www.ipab.org.mx/" target="_blank" rel="noopener">IPAB</a>.</p>
+  <div class="author-box">
+    <div>Desarrollado por <b><a href="https://habibapez.github.io/" target="_blank" rel="noopener">Habib Apez</a></b> · Sin cookies · Sin rastreo · 100% en tu navegador</div>
+    <div class="links">
+      <a href="https://habibapez.github.io/" target="_blank" rel="noopener">Sitio web</a>
+      <a href="https://habibapez.github.io/tools/" target="_blank" rel="noopener">Tools</a>
+      <a href="https://github.com/HabibApez" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/habib-apez" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+</main>
+
+<script>
+const SM = 315.04, UMA = 117.31;
+const CD = 'Se compra en cetesdirecto sin comisión; el dinero está disponible al vencer.';
+const R = {
+  liq : {n:'BONDDIA (fondo de liquidez diaria de cetesdirecto)', sh:'BONDDIA', g:6.00, src:'Estimado: tasa de fondeo gubernamental menos la comisión del fondo. Verifica el rendimiento actual en cetesdirecto',
+         d:'Fondo de cetesdirecto que invierte en valores del gobierno. Retiras el mismo día hábil.'},
+  c28 : {n:'CETES 28 días',  sh:'CETES 28 días',  g:6.19, src:'Banxico, subasta 19/11/2026', d:CD},
+  c91 : {n:'CETES 91 días',  sh:'CETES 91 días',  g:6.49, src:'Banxico, subasta 19/11/2026', d:CD},
+  c182: {n:'CETES 182 días', sh:'CETES 182 días', g:6.67, src:'Banxico, subasta 19/11/2026', d:CD},
+  c364: {n:'CETES 364 días', sh:'CETES 364 días', g:6.95, src:'Banxico, subasta 12/11/2026', d:CD},
+  c2y : {n:'CETES 2 años',   sh:'CETES 2 años',   g:7.87, src:'Banxico, subasta 19/11/2026', d:CD},
+  udi : {n:'Udibono 10 años (real + inflación)', sh:'Udibonos', g:4.93, src:'Banxico, subasta 19/11/2026 (tasa real)', real:true,
+         d:'Bono del gobierno que se ajusta a la inflación. Se compra en cetesdirecto.'},
+  eq  : {n:'Fondo indexado de bolsa (S&P 500 / ETF)', sh:'S&P 500 / ETF bolsa', g:10.0, src:'Supuesto de largo plazo, NO garantizado', eq:true,
+         d:'ETF o fondo indexado (p. ej. VOO, IVV, VUAA o IVVPESO) en una casa de bolsa.'}
+};
+const P = {inf:4.0, ret:0.90, udi:8.6, ex:'uma'};
+const PROF  = {cons:{c2y:.5,udi:.5}, bal:{c2y:.3,udi:.3,eq:.4}, crec:{c2y:.15,udi:.25,eq:.6}};
+const COLORS= {ef:'#0284c7', debt:'#e11d48', col:'#4f46e5', lp:'#059669', sv:'#64748b'};
+const LADDER= {c28:'28 días', c91:'91 días', c182:'182 días', c364:'364 días'};
+const HOR   = {c28:28, c91:91, c182:182, c364:364};
+const PLAZOS= {0:'Liquidez diaria', 28:'28 días', 90:'90 días', 180:'180 días', 365:'1 año'};
+const NEWDEBT = {
+  card:{n:'Tarjeta de crédito',   s:10000,  r:60},
+  auto:{n:'Crédito automotriz',   s:150000, r:14},
+  hip :{n:'Crédito hipotecario',  s:900000, r:11},
+  pers:{n:'Préstamo personal',    s:20000,  r:35}
+};
+let debts = [{n:'Tarjeta de crédito', s:35000, r:58}, {n:'Crédito automotriz', s:120000, r:14}];
+let sofs  = [{n:'SOFIPO A (ejemplo)', r:7.5, p:0, tope:0}, {n:'SOFIPO B (ejemplo)', r:8.8, p:90, tope:100000}];
+let postTouched = false;
+
+const $ = id => document.getElementById(id);
+const num = el => parseFloat(String((typeof el === 'string' ? $(el) : el).value).replace(/[^\d.\-]/g, '')) || 0;
+const fmt = n => (isFinite(n) ? n : 0).toLocaleString('es-MX', {style:'currency', currency:'MXN', maximumFractionDigits:0});
+const f2 = n => (isFinite(n) ? n : 0).toFixed(2) + '%';
+const grp3 = n => n ? Math.round(n).toLocaleString('es-MX') : '';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nominal = k => R[k].real ? R[k].g + P.inf : R[k].g;
+const net = k => R[k].eq ? nominal(k) : nominal(k) - P.ret;
+const exLimit = () => P.ex === 'uma' ? 5*UMA*365 : P.ex === 'sm' ? 5*SM*365 : 0;
+const capSof = () => 25000 * P.udi;
+
+/* Auto-format thousands separators while typing (preserving caret position) */
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (!el.classList || !el.classList.contains('money')) return;
+  const pos = el.selectionStart ?? el.value.length;
+  const before = el.value.slice(0, pos).replace(/\D/g, '').length;
+  const digits = el.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+  const out = digits ? Number(digits).toLocaleString('es-MX') : '';
+  el.value = out;
+  let i = 0, c = 0;
+  while (i < out.length && c < before){ if (/\d/.test(out[i])) c++; i++; }
+  try { el.setSelectionRange(i, i); } catch(_){}
+}, true);
+
+function read(){
+  return { monto:num('monto'), ahorro:num('ahorro'), ahorroR:+$('ahorroR').value||0, ahorroIn:$('ahorroIn').checked,
+    fijos:num('fijos'), vari:num('var'), otros:num('otros'), meses:+$('meses').value, post:num('post'),
+    umbral:+$('umbral').value||0, salud:$('salud').checked, saludCosto:num('saludCosto'), protect:$('protect').checked,
+    mesesEf:+$('mesesEf').value, perfil:document.querySelector('input[name=perfil]:checked').value, stress:+$('stress').value };
+}
+
+function plan(s){
+  const need = Math.max(0, s.fijos + s.vari + (s.salud ? s.saludCosto : 0) - s.otros);
+  let rem = s.monto + (s.ahorroIn ? s.ahorro : 0);
+  const take = a => { const t = Math.max(0, Math.min(rem, a)); rem -= t; return t; };
+  // 1. Immediate cash buffer
+  const ef = take(need * s.mesesEf);
+  // 2. High-interest debts (avalanche); low-rate loans (auto, mortgage) are not prepaid
+  const hi = debts.filter(d => d.r >= s.umbral && d.s > 0).sort((a,b) => b.r - a.r);
+  const cheap = debts.filter(d => d.r < s.umbral && d.s > 0);
+  const paid = hi.map(d => ({...d, p: take(d.s)}));
+  const debtPaid = paid.reduce((a,d) => a + d.p, 0);
+  const debtHiTotal = hi.reduce((a,d) => a + d.s, 0);
+  // 3. Staggered maturity ladder buffer
+  const lad = {c28:0, c91:0, c182:0, c364:0}, ladM = {c28:[], c91:[], c182:[], c364:[]};
+  const colTarget = need * Math.max(0, s.meses - s.mesesEf);
+  for (let m = s.mesesEf + 1; m <= s.meses; m++){
+    const u = m - 1;
+    const k = u <= 1 ? 'c28' : u <= 3 ? 'c91' : u <= 6 ? 'c182' : 'c364';
+    const t = take(need); lad[k] += t; if (t > 0) ladM[k].push(m);
+  }
+  const col = Object.values(lad).reduce((a,b) => a + b, 0);
+  // 4. Long-term allocation
+  const lp = rem;
+  const lpParts = {}; for (const k in PROF[s.perfil]) lpParts[k] = lp * PROF[s.perfil][k];
+  // 5. SOFIPOs: only used when net yield beats the government option at the same term
+  const buckets = [
+    {g:'ef', def:'liq', h:0, amt:ef},
+    ...Object.keys(lad).map(k => ({g:'col', rung:k, def:k, h:HOR[k], amt:lad[k], months:ladM[k]})),
+    ...Object.keys(lpParts).map(k => ({g:'lp', def:k, h:k === 'c2y' ? 730 : -1, amt:lpParts[k]}))
+  ];
+  const cap = s.protect ? capSof() : Infinity, exL = exLimit();
+  const S = sofs.map((o,i) => ({...o, i, room:Math.min(o.tope > 0 ? o.tope : Infinity, cap), used:0}));
+  let sofTot = 0;
+  for (const b of buckets){
+    b.hold = []; let A = b.amt;
+    if (b.h >= 0 && A > 0){
+      const el = S.filter(o => o.p <= b.h && o.r > 0).sort((a,c) => c.r - a.r);
+      for (const o of el){
+        if (A <= 0) break;
+        const x = Math.min(A, o.room - o.used);
+        if (x <= 0) continue;
+        // Portion of x taxed after exceeding the 5 UMA / 5 SM tax-exempt cap
+        const taxSlice = Math.max(0, (sofTot + x) - Math.max(sofTot, exL));
+        const sNet = o.r - P.ret * (taxSlice / x);
+        if (sNet <= net(b.def)) continue;
+        b.hold.push({sof:o.i, amt:x}); o.used += x; sofTot += x; A -= x;
+      }
+    }
+    if (A > 0.005) b.hold.push({k:b.def, amt:A});
+  }
+  const sofRet = sofTot > 0 ? P.ret * Math.max(0, sofTot - exL) / sofTot : 0;
+  const hNet   = h => h.sof != null ? sofs[h.sof].r - sofRet : net(h.k);
+  const hGross = h => h.sof != null ? sofs[h.sof].r : nominal(h.k);
+  const hName  = h => h.sof != null ? sofs[h.sof].n + ' (SOFIPO)' : R[h.k].sh;
+  const hDesc  = h => h.sof != null ? `SOFIPO que agregaste · plazo: ${PLAZOS[sofs[h.sof].p].toLowerCase()}. Paga más que la opción del gobierno a ese plazo.` : R[h.k].d;
+  const grp = g => buckets.filter(b => b.g === g).flatMap(b => b.hold);
+  const rate = (hs, fn) => { let t=0, w=0; hs.forEach(h => { t += h.amt*fn(h); w += h.amt; }); return w ? t/w : 0; };
+  return { need, ef, paid, cheap, debtPaid, debtHiTotal, lad, col, colTarget, lp, lpParts, buckets, S, sofTot, sofRet, exL, cap,
+    hNet, hGross, hName, hDesc, grp, rate };
+}
+
+function runway(start, r, need){
+  if (need <= 0) return Infinity;
+  let b = start, m = 0;
+  while (b > 0 && m < 600){
+    b *= 1 + r/1200;
+    if (b >= need){ b -= need; m++; } else { m += b/need; b = 0; }
+  }
+  return m;
+}
+
+function project(s, p){
+  const labels = [], planS = [], base = [];
+  const real = $('real').checked;
+  let L = p.ef + p.col, G = p.lp, Sv = s.ahorroIn ? 0 : s.ahorro;
+  const rL = p.rLiq/1200, rG = p.rLp/1200, rS = s.ahorroR/1200;
+  const Dp = p.paid.filter(d => d.s - d.p > 0.5).map(d => ({s:d.s - d.p, r:d.r}));
+  const drawP = x => { const a = Math.min(x, Math.max(L,0)); L -= a; x -= a;
+                       const b = Math.min(x, Math.max(Sv,0)); Sv -= b; x -= b; G -= x; };
+  let C = s.monto, Sb = s.ahorro;
+  const Db = p.paid.map(d => ({s:d.s, r:d.r}));
+  const drawB = x => { const a = Math.min(x, Math.max(C,0)); C -= a; x -= a;
+                       const b = Math.min(x, Math.max(Sb,0)); Sb -= b; x -= b; C -= x; };
+  const target = 3 * (s.fijos + s.vari);
+  for (let m = 0; m <= 36; m++){
+    if (m > 0){
+      L *= 1 + rL; G *= 1 + rG; Sv *= 1 + rS; Sb *= 1 + rS;
+      drawB(Db.reduce((a,d) => a + d.s*d.r/1200, 0));
+      if (m <= s.stress){
+        drawP(p.need + Dp.reduce((a,d) => a + d.s*d.r/1200, 0));
+        drawB(p.need);
+      } else {
+        Dp.forEach(d => d.s *= 1 + d.r/1200);
+        let a = s.post;
+        Dp.sort((x,y) => y.r - x.r).forEach(d => { const x = Math.min(a, d.s); d.s -= x; a -= x; });
+        const toL = Math.min(a, Math.max(0, target - L)); L += toL; a -= toL;
+        G += a;
+        C += s.post;
+      }
+    }
+    const defl = real ? Math.pow(1 + P.inf/100, m/12) : 1;
+    labels.push(m === 0 ? 'Hoy' : 'Mes ' + m);
+    planS.push((L + G + Sv - Dp.reduce((a,d) => a + d.s, 0)) / defl);
+    base.push((C + Sb - Db.reduce((a,d) => a + d.s, 0)) / defl);
+  }
+  return {labels, plan:planS, base};
+}
+
+const jobLine = {
+  id:'jobLine',
+  afterDatasetsDraw(c, args, opts){
+    const m = opts.m; if (m == null || m > 36) return;
+    const x = c.scales.x.getPixelForValue(m), {top, bottom} = c.chartArea, g = c.ctx;
+    g.save(); g.strokeStyle = '#475569'; g.setLineDash([5,4]); g.beginPath(); g.moveTo(x, top); g.lineTo(x, bottom); g.stroke();
+    g.setLineDash([]); g.fillStyle = '#1e293b'; g.font = '600 12px system-ui';
+    const right = m > 28; g.textAlign = right ? 'right' : 'left';
+    g.fillText('Encuentras trabajo', x + (right ? -6 : 6), top + 14); g.restore();
+  }
+};
+let chart, pieChart;
+function chartFallback(canvasId, msg){
+  const box = $(canvasId)?.parentElement;
+  if (box && !box.querySelector('.chart-fb')) box.innerHTML = `<div class="chart-fb">${msg}</div>`;
+}
+function draw(pr, stress){
+  if (typeof Chart === 'undefined'){ chartFallback('chart', 'No se pudo cargar la gráfica de proyección (sin conexión al CDN). Los cálculos y tablas siguen funcionando.'); return; }
+  const data = {labels: pr.labels, datasets: [
+    {label:'Con el plan sugerido', data:pr.plan, borderColor:'#0f766e', backgroundColor:'rgba(15,118,110,.10)', fill:true, tension:.25, pointRadius:0},
+    {label:'Sin plan (cuenta sin rendimiento; solo pagas intereses de tus deudas caras)', data:pr.base, borderColor:'#b42318', borderDash:[6,4], tension:.25, pointRadius:0}
+  ]};
+  if (chart){ chart.data = data; chart.options.plugins.jobLine.m = stress; chart.update(); return; }
+  chart = new Chart($('chart'), {type:'line', data, plugins:[jobLine], options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
+    plugins:{jobLine:{m:stress}, legend:{labels:{boxWidth:14}}, tooltip:{callbacks:{label:c => c.dataset.label.split(' (')[0] + ': ' + fmt(c.parsed.y)}}},
+    scales:{y:{ticks:{callback:v => fmt(v)}}, x:{ticks:{maxTicksLimit:10}}}}});
+}
+function drawPie(rows, total){
+  const act = rows.filter(r => r.a > 0);
+  $('pieTot').textContent = fmt(total);
+  $('pieLeg').innerHTML = act.length
+    ? act.map(r => {
+        const pct = total ? (100*r.a/total).toFixed(1) : '0.0';
+        return `<div class="pie-it"><span class="pl"><span class="dot" style="background:${COLORS[r.k]};margin:0;flex-shrink:0"></span><span>${esc(r.l.replace(/^\d+\s·\s/,''))}</span></span><span class="pn">${fmt(r.a)}<span class="pp">${pct}%</span></span></div>`;
+      }).join('')
+    : '<div class="hint">Ingresa un monto mayor a $0 para ver la distribución.</div>';
+  if (typeof Chart === 'undefined'){ chartFallback('pieChart', 'Gráfica no disponible sin conexión al CDN.'); return; }
+  const hasData = act.length > 0 && total > 0;
+  const data = hasData
+    ? { labels: act.map(r => r.l.replace(/^\d+\s·\s/,'')), datasets: [{data: act.map(r => r.a), backgroundColor: act.map(r => COLORS[r.k]), borderColor:'#fff', borderWidth:2, hoverOffset:6}] }
+    : { labels: ['Sin capital'], datasets: [{data: [1], backgroundColor: ['#e4e7ec'], borderWidth:0, hoverOffset:0}] };
+  if (pieChart){ pieChart.data = data; pieChart.options.plugins.tooltip.enabled = hasData; pieChart.update(); return; }
+  pieChart = new Chart($('pieChart'), {type:'pie', data, options:{responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{enabled:hasData, callbacks:{label:c => {
+      const v = c.parsed || 0, sum = c.dataset.data.reduce((a,b) => a + b, 0);
+      const p = sum ? (100*v/sum).toFixed(1) : '0.0';
+      return `${c.label}: ${fmt(v)} (${p}%)`;
+    }}}}}});
+}
+
+/* "Where to invest" column: instrument name + description; show per-line amount and rate only when split across multiple instruments */
+function describe(p, hs){
+  const m = new Map();
+  hs.forEach(h => { const k = p.hName(h); const e = m.get(k) || {a:0, g:p.hGross(h), d:p.hDesc(h)}; e.a += h.amt; m.set(k, e); });
+  const L = [...m];
+  if (!L.length) return '—';
+  if (L.length === 1){ const [n,e] = L[0]; return `<div class="inst"><b>${esc(n)}</b><div class="hint">${esc(e.d)}</div></div>`; }
+  return L.map(([n,e]) => `<div class="inst"><b>${esc(n)}</b> · ${f2(e.g)} · ${fmt(e.a)}<div class="hint">${esc(e.d)}</div></div>`).join('');
+}
+
+function calc(){
+  const s = read();
+  $('mesesV').textContent = s.meses + ' meses';
+  $('stressV').textContent = s.stress;
+  $('capTxt').textContent = fmt(capSof());
+  $('retTxt').textContent = f2(P.ret);
+  $('whyC28').textContent = f2(R.c28.g);
+  $('whyC364').textContent = f2(R.c364.g);
+  $('postV').textContent = fmt(s.post);
+  const profNames = {cons:'Conservador', bal:'Balanceado', crec:'Crecimiento'};
+  $('printMeta').innerHTML = `<b>Resumen de tu simulación</b> · Generado el ${new Date().toLocaleDateString('es-MX')}<br>
+    Liquidación: <b>${fmt(s.monto)}</b> · Ahorro previo: <b>${fmt(s.ahorro)}</b> (${s.ahorroIn ? 'incluido en el reparto' : 'por separado'}) · Gasto mensual neto: <b>${fmt(Math.max(0, s.fijos + s.vari + (s.salud ? s.saludCosto : 0) - s.otros))}</b><br>
+    Búsqueda planeada: <b>${s.meses} meses</b> (estrés: ${s.stress} meses) · Efectivo inmediato: <b>${s.mesesEf} mes(es)</b> · Perfil largo plazo: <b>${profNames[s.perfil]}</b> · Inflación: <b>${f2(P.inf)}</b> · Retención ISR: <b>${f2(P.ret)}</b>`;
+  $('postSrc').textContent = postTouched ? 'la cantidad que escribiste' : `el 10% de un salario de ${fmt(num('lSal'))} (sugerencia automática)`;
+  $('postHint').innerHTML = postTouched
+    ? 'Valor que escribiste. Se usa en la proyección a partir del mes en que encuentras trabajo. <a class="why" href="#why-proy">¿Para qué sirve?</a>'
+    : `Sugerencia automática: 10% del salario de la calculadora del paso 1 (${fmt(num('lSal'))}), el mínimo que recomienda Condusef. Cámbialo si sabes cuánto podrás ahorrar. <a class="why" href="#why-proy">¿Para qué sirve?</a>`;
+  const p = plan(s);
+  const Hef = p.grp('ef'), Hcol = p.grp('col'), Hlp = p.grp('lp');
+  p.rLiq = p.rate([...Hef, ...Hcol], p.hNet); p.rLp = p.rate(Hlp, p.hNet);
+
+  // KPIs
+  const sv = s.ahorroIn ? 0 : s.ahorro;
+  const liq = p.ef + p.col, liqAll = liq + sv, rLiqAll = liqAll ? (liq*p.rLiq + sv*s.ahorroR)/liqAll : 0;
+  const tot = liqAll + p.lp, rTot = tot ? (liqAll*rLiqAll + p.lp*p.rLp)/tot : 0;
+  const run = runway(liqAll, rLiqAll, p.need), runAll = runway(tot, rTot, p.need);
+  const show = m => m === Infinity ? '∞' : m >= 120 ? '10+ años' : m.toFixed(1) + ' meses';
+  $('kRun').textContent = show(run);
+  $('kRun2').textContent = p.need > 0 ? `${show(runAll)} si también usas tus inversiones · necesitas ${fmt(p.need)} al mes` : 'Tus otros ingresos cubren tus gastos';
+  $('kDebt').textContent = fmt(p.debtPaid);
+  $('kDebt2').textContent = p.debtHiTotal ? `${Math.round(100*p.debtPaid/p.debtHiTotal)}% de tu deuda cara` : 'No tienes deuda cara 🎉';
+  $('kSave').textContent = fmt(p.paid.reduce((a,d) => a + d.p*d.r/100, 0));
+  const pr = project(s, p), last = pr.plan[36], diff = last - pr.base[36];
+  $('kNWl').textContent = $('real').checked ? '(pesos de hoy)' : '(pesos nominales)';
+  $('kNW').textContent = fmt(last);
+  $('kNW2').textContent = `${diff >= 0 ? '+' : ''}${fmt(diff)} frente a no hacer nada`;
+
+  // Allocation table and chart
+  const total = s.monto + s.ahorro;
+  const lpDesc = Object.entries(PROF[s.perfil]).map(([k,v]) => `${Math.round(v*100)}% ${R[k].sh}`).join(' · ');
+  const paidTxt = p.paid.filter(d => d.p > 0).map(d => `<div class="inst"><b>${esc(d.n)}</b> (${d.r}%): ${fmt(d.p)}</div>`).join('');
+  const cheapTxt = p.cheap.length ? `<div class="hint">No se adelantan (tasa menor a ${s.umbral}%): ${p.cheap.map(d => `${esc(d.n)} ${d.r}%`).join(', ')}. Su mensualidad va en tus gastos fijos.</div>` : '';
+  const rows = [
+    {k:'ef', why:'why-ef', l:'1 · Efectivo inmediato', a:p.ef, w:describe(p, Hef), g:p.rate(Hef,p.hGross), n:p.rate(Hef,p.hNet), d:'El mismo día'},
+    {k:'debt', why:'why-deudas', l:'2 · Liquidar deudas caras', a:p.debtPaid, w:(paidTxt || '—') + cheapTxt, g:null,
+       n:p.debtPaid ? p.paid.reduce((a,d) => a + d.p*d.r, 0)/p.debtPaid : 0, d:'—'},
+    {k:'col', why:'why-colchon', l:`3 · Colchón (${Math.max(0, s.meses - s.mesesEf)} meses)`, a:p.col, w:describe(p, Hcol), g:p.rate(Hcol,p.hGross), n:p.rate(Hcol,p.hNet), d:'Escalonada'},
+    {k:'lp', why:'why-lp', l:'4 · Largo plazo', a:p.lp, w:(p.lp > 0 ? `<div class="hint" style="margin:0 0 6px">${lpDesc}</div>` : '') + describe(p, Hlp), g:p.rate(Hlp,p.hGross), n:p.rate(Hlp,p.hNet), d:'1 año o más'}
+  ];
+  if (sv > 0) rows.push({k:'sv', why:'why-proy', l:'Ahorro que ya tenías (no se mueve)', a:sv, w:'Donde está hoy', g:s.ahorroR, n:s.ahorroR, d:'Según tu cuenta'});
+  $('bar').innerHTML = rows.filter(r => r.a > 0).map(r =>
+    `<div style="flex:${r.a};background:${COLORS[r.k]}" title="${esc(r.l)}: ${fmt(r.a)}">${total ? Math.round(100*r.a/total) : 0}%</div>`).join('');
+  drawPie(rows, total);
+  $('tbl').innerHTML = rows.map(r => `<tr>
+      <td class="cell-main"><span class="dot" style="background:${COLORS[r.k]}"></span><b>${r.l}</b> · <a class="why" href="#${r.why}">¿Por qué?</a></td>
+      <td class="n" data-label="Monto"><b>${fmt(r.a)}</b></td>
+      <td class="cell-block">${r.w}</td>
+      <td class="n" data-label="Tasa bruta">${r.g == null ? '—' : r.a ? f2(r.g) : '—'}</td>
+      <td class="n" data-label="Tasa neta*">${r.a ? f2(r.n) : '—'}</td>
+      <td data-label="Disponibilidad">${r.d}</td></tr>`).join('');
+
+  // Maturity ladder
+  const rungs = p.buckets.filter(b => b.g === 'col');
+  const max = Math.max(...rungs.map(b => b.amt), 1);
+  $('ladder').innerHTML = p.col > 0
+    ? rungs.map(b => {
+        const ms = b.months.length ? `Mes ${b.months[0]}${b.months.length > 1 ? '–' + b.months[b.months.length-1] : ''}` : '';
+        return b.amt > 0
+          ? `<div class="rung" style="height:${45 + 55*b.amt/max}%"><div class="rt">Plazo ${LADDER[b.rung]}</div><div class="rm">${ms}</div>
+               <b>${fmt(b.amt)}</b><div class="rh">${b.hold.map(h => `${esc(p.hName(h))} · ${f2(p.hGross(h))}`).join('<br>')}</div></div>`
+          : `<div class="rung empty" style="height:45%"><div class="rt">Plazo ${LADDER[b.rung]}</div><b>$0</b><div class="rh">No necesitas dinero en este plazo</div></div>`;
+      }).join('')
+    : '<div class="hint" style="grid-column:1/-1">Con tu monto actual no queda dinero para el colchón. <a class="why" href="#alertas">Revisa las alertas</a>.</div>';
+
+  // SOFIPOs: explain which benchmark was compared and with what rates
+  if (!sofs.length){
+    $('sofOut').innerHTML = '<div class="hint">No has agregado SOFIPOs. Puedes agregarlas en el paso 4 para compararlas contra BONDDIA y CETES.</div>';
+  } else {
+    const cap = capSof();
+    $('sofOut').innerHTML = `<table class="rtable"><thead><tr><th>SOFIPO</th><th class="n">Tasa</th><th>Plazo</th><th class="n">Asignado</th><th>Monto protegido usado</th><th>Nota</th></tr></thead><tbody>${
+      p.S.map(o => {
+        let note;
+        const elig = p.buckets.filter(b => b.h >= 0 && b.amt > 0 && o.p <= b.h);
+        const alts = elig.map(b => ({n:R[b.def].sh, r:net(b.def)}));
+        const low = alts.length ? alts.reduce((a,c) => c.r < a.r ? c : a) : null;
+        const beat = [...new Set(alts.filter(a => o.r > a.r).map(a => a.n))];
+        if (o.used > 0){
+          const vs = [...new Set(p.buckets.filter(b => b.hold.some(h => h.sof === o.i)).map(b => `${R[b.def].sh} (${f2(net(b.def))} neta)`))].join(', ');
+          if (o.used > cap + 1) note = `<span style="color:var(--bad)">${fmt(o.used - cap)} quedan <b>sin protección</b></span>`;
+          else if (o.tope > 0 && o.used >= o.tope - 1) note = `Reemplaza a ${vs}. Llegó al tope de su tasa promocional.`;
+          else if (s.protect && o.used >= cap - 1) note = `Reemplaza a ${vs}. Llegó al monto protegido; el resto va a otra opción.`;
+          else note = `Reemplaza a ${vs} porque paga más. Dentro del monto protegido ✓`;
+        } else if (!(o.r > 0)) note = 'Escribe su tasa.';
+        else if (!elig.length) note = `Su plazo (${PLAZOS[o.p].toLowerCase()}) es más largo que el momento en que necesitas el dinero.`;
+        else if (!beat.length) note = `Paga ${f2(o.r)} y no supera a ${low.n}, que paga ${f2(low.r)} neta. Es la opción del gobierno con la que compite a su plazo.`;
+        else note = `Paga más que ${beat.join(', ')}, pero ese dinero ya lo cubren SOFIPOs con mejor tasa o se alcanzó su límite.`;
+        const pct = Math.min(100, 100*o.used/cap), over = o.used > cap;
+        return `<tr><td class="cell-main"><b>${esc(o.n)}</b></td>
+          <td class="n" data-label="Tasa">${f2(o.r)}</td>
+          <td data-label="Plazo">${PLAZOS[o.p]}</td>
+          <td class="n" data-label="Asignado"><b>${fmt(o.used)}</b></td>
+          <td data-label="Seguro Prosofipo"><div><div class="prot"><i class="${over ? 'over' : ''}" style="width:${pct}%"></i></div><span class="hint">${Math.round(100*o.used/cap)}% de ${fmt(cap)}</span></div></td>
+          <td class="note cell-block">${note}</td></tr>`;
+      }).join('')}</tbody></table>
+      <div class="hint">Total en SOFIPOs: <b>${fmt(p.sofTot)}</b>. Exento de ISR hasta ${p.exL ? fmt(p.exL) : '$0'}${p.sofTot > p.exL ? ` → al excedente se le aplica la retención (efectiva ${f2(p.sofRet)})` : ' ✓'}. <a class="why" href="#why-sofipo">¿Por qué?</a></div>`;
+  }
+
+  // 1) Dynamic alerts: depend strictly on user inputs (bad = critical issue, '' = contextual note, ok = confirmation)
+  const A = [];
+  const totalPool = s.monto + (s.ahorroIn ? s.ahorro : 0);
+  if (p.ef < p.need * s.mesesEf - 1)
+    A.push(['bad', `<b>Ni siquiera alcanza para los ${s.mesesEf} mes(es) de efectivo inmediato.</b> Faltan ${fmt(p.need * s.mesesEf - p.ef)}. Recorta gastos variables de inmediato o considera usar tu ahorro previo.`, 'why-ef']);
+  if (p.col < p.colTarget - 1)
+    A.push(['bad', `<b>Tu colchón no alcanza para los ${s.meses} meses planeados.</b> Faltan ${fmt(p.colTarget - p.col)}. Considera pagar solo el mínimo de alguna deuda o recortar gastos variables.`, 'why-colchon']);
+  else if (p.colTarget > 0)
+    A.push(['ok', `<b>Tu colchón cubre completos los ${s.meses} meses de búsqueda</b> (${fmt(p.ef + p.col)} entre efectivo y escalera).`, 'why-colchon']);
+  if (s.stress > runAll && p.need > 0)
+    A.push(['bad', `<b>En tu prueba de estrés (${s.stress} meses sin empleo) tu patrimonio total se agotaría en el mes ${runAll.toFixed(1)}</b>, incluso usando tus inversiones de largo plazo. Necesitarías recortar gastos o generar ingresos temporales antes de ese punto.`, 'why-proy']);
+  else if (s.stress > run && p.need > 0)
+    A.push(['', `<b>En tu prueba de estrés (${s.stress} meses sin empleo) sí te alcanza el dinero</b> (tu patrimonio total dura <b>${show(runAll)}</b>), pero en el <b>mes ${run.toFixed(1)}</b> se termina el colchón líquido que apartaste para ${s.meses} meses y tendrías que tomar de tu inversión de largo plazo antes de tiempo. Si ves probable tardar ${s.stress} meses, sube los meses de búsqueda en el <a class="why" href="#meses">paso 2</a>.`, 'why-proy']);
+  if (p.debtPaid < p.debtHiTotal - 1)
+    A.push(['bad', `<b>No alcanza para liquidar toda tu deuda cara.</b> Quedan ${fmt(p.debtHiTotal - p.debtPaid)} generando intereses altos. Pide a tu banco una reestructura o un plan de pagos fijos.`, 'why-deudas']);
+  if (p.S.some(o => o.used > capSof() + 1))
+    A.push(['bad', `<b>Tienes dinero en SOFIPOs por encima del seguro Prosofipo</b> (${fmt(capSof())} por SOFIPO). Si una quiebra, ese excedente no está cubierto. Reparte entre varias.`, 'why-sofipo']);
+  if (p.paid.some(d => d.p > 0))
+    A.push(['', '<b>Cuando liquides tu tarjeta, no la canceles.</b> Déjala en $0 como respaldo para una urgencia médica y para conservar tu historial crediticio.', 'why-deudas']);
+  if (p.cheap.length)
+    A.push(['', `<b>No se adelanta: ${p.cheap.map(d => esc(d.n)).join(', ')}.</b> Su tasa es menor que tu límite de deuda cara (${s.umbral}%) y, sin ingresos, conviene conservar la liquidez. Asegúrate de incluir su mensualidad en tus gastos fijos${p.cheap.some(d => /hipotec/i.test(d.n)) ? '. Si tu hipoteca es de Infonavit, pregunta por el Seguro de Desempleo (Fondo de Protección de Pagos) o prórroga' : ''}.`, 'why-deudas']);
+  if (!s.salud)
+    A.push(['', '<b>No incluiste gasto de seguro médico.</b> El IMSS solo te cubre 8 semanas después de la baja; planea cómo te cubrirás a partir de la semana 9.', 'why-salud']);
+  if (p.sofTot > 0)
+    A.push(['', `<b>Vas a poner ${fmt(p.sofTot)} en SOFIPOs.</b> Antes de transferir, verifica que estén autorizadas en el padrón de la CNBV y revisa su NICAP (nivel de capitalización categoría 1) en Condusef.`, 'why-sofipo']);
+  if (p.sofTot > p.exL)
+    A.push(['', `<b>Tu saldo en SOFIPOs rebasa el monto exento de ISR</b> (${fmt(p.exL)}), así que se retiene ISR sobre el excedente.`, 'why-sofipo']);
+  if (p.lpParts.eq > 0)
+    A.push(['', `<b>${fmt(p.lpParts.eq)} irían a renta variable (S&P 500 / ETF de bolsa).</b> Puede caer 20–35% en un mal año; mete ahí solo el excedente que no vayas a tocar en 5 años o más (tu colchón de desempleo ya está blindado en deuda fija).`, 'why-sp500']);
+
+  // 2) Baseline rules / must-dos: always apply regardless of numbers (do not inflate alert count)
+  const M = [
+    ['<b>1. Revisa tu liquidación antes de firmar.</b> Tienes 2 meses desde el despido para reclamar (art. 518 de la LFT). La PROFEDET revisa tu cálculo y te asesora gratis.', 'why-revisar'],
+    ['<b>2. Cuidado con los fraudes.</b> Desconfía de cualquier "inversión" que prometa rendimientos garantizados muy por encima de CETES (hoy 6–8% anual) o te pida meter toda tu liquidación en un negocio.', null],
+    [`<b>3. Conoce los seguros de tus depósitos.</b> CETES y BONDDIA tienen respaldo del Gobierno Federal. En bancos, el IPAB cubre hasta 400,000 UDIS (≈ ${fmt(400000*P.udi)}) por persona y banco. En SOFIPOs, Prosofipo cubre 25,000 UDIS (≈ ${fmt(capSof())}).`, 'why-colchon'],
+    ['<b>4. Tu Afore es el último recurso.</b> Puedes hacer un retiro parcial por desempleo, pero te descuenta semanas cotizadas para tu pensión.', 'why-afore']
+  ];
+
+  $('alerts').innerHTML = A.map(([c,t,w]) => `<div class="alert ${c}">${t}${w ? ` <a class="why" href="#${w}">¿Por qué?</a>` : ''}</div>`).join('');
+  $('musts').innerHTML = M.map(([t,w]) => `<div class="alert must">${t}${w ? ` <a class="why" href="#${w}">¿Por qué?</a>` : ''}</div>`).join('');
+
+  const nBad = A.filter(a => a[0] === 'bad').length, nRec = A.filter(a => a[0] === '').length;
+  $('nAl').textContent = nBad;
+  $('jumpAl').className = nBad > 0 ? 'hot' : 'ok';
+  $('jumpAl').innerHTML = `${nBad > 0 ? '⚠️ Alertas' : '✅ Sin alertas'} <span class="cn" id="nAl">${nBad}</span>`;
+  $('alertas').classList.toggle('clean', nBad === 0);
+  $('alTitle').textContent = nBad > 0 ? '⚠️ Alertas de tu simulación' : '✅ Tu simulación no tiene alertas críticas';
+  $('cntR').className = nBad > 0 ? 'cnt r' : 'cnt g';
+  $('cntR').textContent = nBad > 0 ? `${nBad} alerta${nBad === 1 ? '' : 's'} de tus números` : '0 alertas críticas';
+  $('cntY').textContent = `${nRec} nota${nRec === 1 ? '' : 's'} de tu plan`;
+  $('strip').className = nBad > 0 ? 'strip' : 'strip ok';
+  $('strip').innerHTML = nBad > 0
+    ? `⚠️ <span>Tu simulación tiene <b>${nBad} alerta${nBad === 1 ? '' : 's'} importante${nBad === 1 ? '' : 's'}</b> y ${nRec} nota${nRec === 1 ? '' : 's'} sobre tu plan</span><span class="go">Revisar ↓</span>`
+    : `✅ <span><b>Sin alertas críticas en tus números</b> · ${nRec} nota${nRec === 1 ? '' : 's'} de tu plan y 4 reglas básicas antes de firmar o invertir</span><span class="go">Ver detalles ↓</span>`;
+
+  draw(pr, s.stress);
+}
+
+/* Approximate Mexican Federal Labor Law (LFT) severance estimator */
+function lft(){
+  const S = num('lSal'), A = +$('lAnios').value || 0, d = S/30;
+  const i90 = 90*d, i20 = 20*d*A, pa = 12*Math.min(d, 2*SM)*A, tot = i90 + i20 + pa;
+  const yrs = Math.floor(A) + ((A % 1) > 0.5 ? 1 : 0);
+  const ex = Math.min(tot, 90*UMA*yrs), isr = (tot - ex)*0.20, neto = tot - isr;
+  $('lOut').innerHTML = `3 meses de salario: <b>${fmt(i90)}</b><br>20 días por año: <b>${fmt(i20)}</b><br>Prima de antigüedad: <b>${fmt(pa)}</b><br>
+    Total bruto: <b>${fmt(tot)}</b> · Exento de ISR: ${fmt(ex)}<br>Neto aproximado: <b>${fmt(neto)}</b> <span class="badge">ISR estimado: 20% del excedente</span><br>
+    No incluye el finiquito (aguinaldo, vacaciones, prima vacacional). La ley usa el salario integrado, que da un monto mayor. <a class="why" href="#why-revisar">¿Por qué?</a>`;
+  if (!postTouched) $('post').value = grp3(S * 0.10);
+  return neto;
+}
+
+/* Editable lists (debts and SOFIPOs) */
+function renderDebts(){
+  $('debts').innerHTML = debts.map((d,i) => `<div class="debt">
+    <input type="text" value="${esc(d.n)}" data-i="${i}" data-k="n" placeholder="Nombre de la deuda">
+    <input type="text" inputmode="numeric" class="money" value="${grp3(d.s)}" data-i="${i}" data-k="s" placeholder="Saldo $" title="Saldo $">
+    <input type="number" step="0.1" value="${d.r}" data-i="${i}" data-k="r" placeholder="Tasa %" title="Tasa anual %"><button data-del="${i}" title="Quitar">✕</button></div>`).join('');
+}
+function renderSofs(){
+  $('sofs').innerHTML = sofs.map((o,i) => `<div class="sof">
+    <div class="sofh"><input type="text" value="${esc(o.n)}" data-i="${i}" data-k="n" placeholder="Nombre de la SOFIPO"><button data-del="${i}" title="Quitar">✕</button></div>
+    <div class="sofg">
+      <div><span class="mini">Tasa anual %</span><input type="number" step="0.01" value="${o.r}" data-i="${i}" data-k="r"></div>
+      <div><span class="mini">Plazo</span><select data-i="${i}" data-k="p">${Object.entries(PLAZOS).map(([v,t]) => `<option value="${v}" ${+v === o.p ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+      <div><span class="mini">Tope de esa tasa $ (opcional)</span><input type="text" inputmode="numeric" class="money" placeholder="Sin tope" value="${grp3(o.tope)}" data-i="${i}" data-k="tope"></div>
+    </div></div>`).join('');
+}
+function bindList(id, arr, render){
+  $(id).addEventListener('input', e => { const t = e.target; if (t.dataset.i == null) return;
+    const k = t.dataset.k; arr()[+t.dataset.i][k] = k === 'n' ? t.value : num(t); calc(); });
+  $(id).addEventListener('click', e => { const i = e.target.dataset.del; if (i == null) return; arr().splice(+i, 1); render(); calc(); });
+}
+bindList('debts', () => debts, renderDebts);
+bindList('sofs', () => sofs, renderSofs);
+document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => { debts.push({...NEWDEBT[b.dataset.add]}); renderDebts(); calc(); });
+$('addSof').onclick = () => { sofs.push({n:'Nueva SOFIPO', r:8, p:0, tope:0}); renderSofs(); calc(); };
+
+/* General input event listeners */
+$('inputs').addEventListener('input', e => {
+  const t = e.target;
+  if (t.closest('#debts, #sofs')) return;
+  if (t.id === 'post') postTouched = true;
+  if (t.id === 'lSal' || t.id === 'lAnios'){ lft(); calc(); return; }
+  if (t.id === 'meses') $('stress').value = t.value;
+  calc();
+});
+['stress','real'].forEach(id => $(id).addEventListener('input', calc));
+
+const touchedRates = new Set(), touchedParams = new Set();
+$('rates').innerHTML = Object.entries(R).map(([k,r]) => `<tr><td class="cell-main"><b>${r.n}</b></td>
+  <td class="n" data-label="Tasa anual %"><input class="rate-in" type="number" step="0.01" value="${r.g}" data-r="${k}"></td><td class="hint cell-block" data-source="${k}">${r.src}</td></tr>`).join('');
+$('rates').addEventListener('input', e => { const k = e.target.dataset.r; if (k){ touchedRates.add(k); R[k].g = +e.target.value; calc(); } });
+[['pInf','inf'],['pRet','ret'],['pUdi','udi']].forEach(([id,k]) => $(id).addEventListener('input', e => { touchedParams.add(k); P[k] = +e.target.value; calc(); }));
+$('pEx').addEventListener('input', e => { P.ex = e.target.value; calc(); });
+
+/* "Why?" links expand the target accordion; "#post" and "#meses" focus their input fields */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#why-"]');
+  if (a){ const d = document.querySelector(a.getAttribute('href')); if (d) d.open = true; return; }
+  const fld = e.target.closest('a[href="#post"], a[href="#meses"]');
+  if (fld){ e.preventDefault(); const f = $(fld.getAttribute('href').slice(1)); f.scrollIntoView({behavior:'smooth', block:'center'}); f.focus({preventScroll:true}); if (f.select) f.select(); }
+});
+
+$('lUse').onclick = () => { $('monto').value = grp3(lft()); calc(); };
+let printReady = false;
+function syncPrintCharts(){
+  const tasks = [pieChart, chart].map(inst => {
+    if (!inst || !inst.canvas) return Promise.resolve();
+    const box = inst.canvas.parentElement;
+    if (!box) return Promise.resolve();
+    let img = box.querySelector('img.print-chart');
+    if (!img){ img = document.createElement('img'); img.className = 'print-chart'; img.alt = ''; box.appendChild(img); }
+    try {
+      inst.update('none');
+      const url = inst.toBase64Image('image/png', 1);
+      if (img.src === url && img.complete) return Promise.resolve();
+      img.src = url;
+      return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+    } catch(_){ return Promise.resolve(); }
+  });
+  return Promise.all(tasks);
+}
+window.addEventListener('beforeprint', () => { if (!printReady) syncPrintCharts(); });
+window.addEventListener('afterprint', () => { printReady = false; });
+$('btnPdf').addEventListener('click', async e => {
+  e.preventDefault();
+  await syncPrintCharts();
+  printReady = true;
+  window.print();
+});
+
+renderDebts(); renderSofs(); lft(); calc();
+
+/* Asynchronously fetch latest rates from the rates-data branch (silent fallback to embedded defaults) */
+(async function loadRemoteRates(){
+  const URL = 'https://raw.githubusercontent.com/HabibApez/habibapez.github.io/rates-data/rates.json';
+  const fmtDateEs = iso => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || '').trim());
+    return m ? `${m[3]}/${m[2]}/${m[1]}` : null;
+  };
+  try {
+    const res = await fetch(URL, { cache: 'no-cache' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || typeof data !== 'object' || !data.rates || typeof data.rates !== 'object') return;
+
+    let updated = false;
+    for (const [k, item] of Object.entries(data.rates)){
+      if (!R[k] || !item || typeof item !== 'object') continue;
+      const g = Number(item.g);
+      if (isFinite(g) && g >= 0 && !touchedRates.has(k)){
+        R[k].g = g;
+        const inp = document.querySelector(`#rates input[data-r="${k}"]`);
+        if (inp) inp.value = g;
+        updated = true;
+      }
+      const dateEs = fmtDateEs(item.date);
+      const src = typeof item.src === 'string' && item.src.trim()
+        ? item.src.trim()
+        : (dateEs ? `Banxico SIE, ${dateEs}` : null);
+      if (src){
+        R[k].src = src;
+        const cell = document.querySelector(`#rates [data-source="${k}"]`);
+        if (cell) cell.textContent = src;
+      }
+    }
+
+    const udiVal = Number(data.udi);
+    if (isFinite(udiVal) && udiVal > 0 && !touchedParams.has('udi')){
+      P.udi = udiVal;
+      $('pUdi').value = udiVal;
+      updated = true;
+    }
+    const infVal = Number(data.inf);
+    if (isFinite(infVal) && infVal >= 0 && !touchedParams.has('inf')){
+      P.inf = infVal;
+      $('pInf').value = infVal;
+      updated = true;
+    }
+
+    const updEs = fmtDateEs(data.updated_at);
+    if (updEs){
+      const pill = $('ratesPill');
+      if (pill) pill.textContent = `📈 Tasas de Banxico al ${updEs}`;
+      const ageDays = (Date.now() - Date.parse(`${data.updated_at}T12:00:00Z`)) / 86400000;
+      const stale = $('ratesStale');
+      if (stale && isFinite(ageDays) && ageDays > 21){
+        stale.textContent = `Aviso: el último dato automático disponible en rates.json corresponde al ${updEs}. Puedes ajustar cualquier tasa manualmente arriba.`;
+        stale.hidden = false;
+      }
+    }
+
+    if (updated) calc();
+  } catch(_){ /* silent fallback to embedded default rates */ }
+})();
+</script>
+</body>
+</html>
