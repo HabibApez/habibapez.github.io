@@ -13,14 +13,20 @@ import os
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-# Banxico SIE REST API endpoint for latest available ("oportuno") observation.
+# Banxico SIE REST API endpoints:
+# - oportuno: latest available observation for each series
+# - range: exact date range (used for SP68257 UDI so we get today's value instead of Banxico's 15-day advance schedule)
 SIE_BASE_URL = (
     "https://www.banxico.org.mx/SieAPIRest/service/v1/series/{series}/datos/oportuno"
 )
+SIE_RANGE_URL = (
+    "https://www.banxico.org.mx/SieAPIRest/service/v1/series/{series}/datos/{start}/{end}"
+)
+MX_TZ = timezone(timedelta(hours=-6))
 
 # Estimated annual management fee subtracted from Banxico's target rate to
 # approximate BONDDIA net-of-fee yield (BONDDIA has no direct SIE series).
@@ -32,7 +38,7 @@ BONDDIA_FEE_SPREAD = 0.25
 #   SF43942  - CETES 182 días, tasa de rendimiento (subasta primaria semanal)
 #   SF43945  - CETES 364 días, tasa de rendimiento (subasta primaria semanal)
 #   SF349785 - CETES 728 días (2 años), tasa de rendimiento (subasta primaria)
-#   SF61592  - Udibonos a 10 años, tasa de interés real (subasta primaria)
+#   SF43924  - Udibonos a 10 años, tasa de interés real (subasta primaria)
 #   SP68257  - Valor de la UDI en pesos
 #   SP30578  - Inflación anual INPC (variación porcentual anual)
 #   SF61745  - Tasa objetivo de Banxico (referencia para estimar BONDDIA)
@@ -58,8 +64,8 @@ SERIES_MAP = {
         "label": "Banxico SIE (SF349785), subasta",
     },
     "udi_rate": {
-        "id": "SF61592",
-        "label": "Banxico SIE (SF61592), tasa real",
+        "id": "SF43924",
+        "label": "Banxico SIE (SF43924), tasa real",
     },
     "udi_val": {
         "id": "SP68257",
@@ -125,9 +131,13 @@ def parse_bmx_number(raw: Any) -> float | None:
     return val if math.isfinite(val) else None
 
 
-def fetch_series(series_ids: list[str], token: str) -> dict[str, tuple[float, str]]:
-    """Query Banxico SIE for multiple series in a single HTTP request."""
-    url = SIE_BASE_URL.format(series=",".join(series_ids))
+def fetch_series(
+    series_ids: list[str],
+    token: str,
+    url_override: str | None = None,
+) -> dict[str, tuple[float, str]]:
+    """Query Banxico SIE for one or more series in a single HTTP request."""
+    url = url_override or SIE_BASE_URL.format(series=",".join(series_ids))
     req = urllib.request.Request(
         url,
         headers={
@@ -157,6 +167,19 @@ def fetch_series(series_ids: list[str], token: str) -> dict[str, tuple[float, st
         if val is not None and iso_date is not None:
             results[sid] = (val, iso_date)
     return results
+
+
+def fetch_today_udi(token: str) -> tuple[float, str] | None:
+    """Fetch today's UDI value (Mexico City date) instead of Banxico's advance schedule."""
+    sid = SERIES_MAP["udi_val"]["id"]
+    today_mx = datetime.now(MX_TZ).strftime("%Y-%m-%d")
+    url = SIE_RANGE_URL.format(series=sid, start=today_mx, end=today_mx)
+    try:
+        res = fetch_series([sid], token, url_override=url)
+        return res.get(sid)
+    except RuntimeError as exc:
+        print(f"Notice: could not fetch today's UDI ({exc}); falling back to oportuno.", file=sys.stderr)
+        return None
 
 
 def load_previous(path: Path | None) -> dict[str, Any]:
@@ -231,11 +254,11 @@ def build_rates_json(fetched: dict[str, tuple[float, str]], prev: dict[str, Any]
     # Order keys cleanly to match expected schema
     ordered_rates = {k: out_rates[k] for k in ("liq", "c28", "c91", "c182", "c364", "c2y", "udi")}
 
-    # UDI value (SP68257)
+    # UDI value (SP68257). Do not include its date in updated_at because Banxico
+    # publishes UDI schedules up to 15 days in advance.
     udi_sid = SERIES_MAP["udi_val"]["id"]
     if udi_sid in fetched:
         udi_val = round(fetched[udi_sid][0], 2)
-        observed_dates.append(fetched[udi_sid][1])
     else:
         udi_val = prev.get("udi", DEFAULT_DATA["udi"])
 
@@ -275,6 +298,11 @@ def main() -> int:
     prev = load_previous(args.previous)
     series_ids = [cfg["id"] for cfg in SERIES_MAP.values()]
     fetched = fetch_series(series_ids, token)
+
+    # Prefer today's UDI (Mexico City date) over Banxico's 15-day advance schedule
+    today_udi = fetch_today_udi(token)
+    if today_udi is not None:
+        fetched[SERIES_MAP["udi_val"]["id"]] = today_udi
 
     if not fetched:
         print("Error: Banxico SIE returned no valid observations for any series.", file=sys.stderr)

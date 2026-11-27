@@ -385,10 +385,10 @@ footer a{color:var(--brand)}
       <p><b>¿Por qué no adelantar el crédito automotriz o hipotecario?</b> Su tasa suele estar entre 10 y 17%, muy por debajo de una tarjeta. Mientras no tienes ingresos, lo más importante es la liquidez: el dinero que usas para adelantar un crédito ya no regresa si lo necesitas, y su mensualidad ya está dentro de tus gastos. Con trabajo estable, adelantarlos podría convenir. Si tu hipoteca es de Infonavit, pregunta por la prórroga de pagos por pérdida de empleo.</p>
       <p><b>Consejo:</b> no canceles la tarjeta. Déjala en $0 como respaldo para emergencias y para conservar tu historial crediticio.</p>
       <div class="src">Fuentes: <a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es" target="_blank" rel="noopener">Banxico SIE – Resultados de la subasta de valores gubernamentales</a> · <a href="https://portalmx.infonavit.org.mx/" target="_blank" rel="noopener">Infonavit</a></div>
-    </details><span id="whyC28">6.19%</span> y a 364 días <span id="whyC364">6.95%</span>
+    </details>
 
     <details class="why-item" id="why-colchon"><summary>3 · Colchón para los meses de búsqueda, en escalera de CETES</summary>
-      <p>Cada mes de gastos se invierte en el plazo que <b>vence justo antes de que lo necesites</b>. Esto se llama calce de plazos. Como los plazos más largos pagan más (hoy CETES a 28 días rinde 6.19% y a 364 días 6.95%), ganas más tasa sin arriesgarte a vender antes de tiempo.</p>
+      <p>Cada mes de gastos se invierte en el plazo que <b>vence justo antes de que lo necesites</b>. Esto se llama calce de plazos. Como los plazos más largos pagan más (hoy CETES a 28 días rinde <span id="whyC28">6.19%</span> y a 364 días <span id="whyC364">6.95%</span>), ganas más tasa sin arriesgarte a vender antes de tiempo.</p>
       <p>Los CETES están respaldados por el <b>Gobierno Federal</b> y se compran sin comisiones en cetesdirecto. Condusef recomienda un fondo de 3 a 6 meses de gastos fijos. Si ya te quedaste sin empleo, conviene apuntar al rango alto, según cuánto tardan los empleos en tu sector.</p>
       <div class="src">Fuentes: <a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es" target="_blank" rel="noopener">Banxico SIE (tasas y respaldo de los CETES)</a> · <a href="https://www.cetesdirecto.com" target="_blank" rel="noopener">cetesdirecto</a> · <a href="https://www.gob.mx/condusef/articulos/fondo-de-emergencia-tu-mejor-aliado-en-los-momentos-dificiles" target="_blank" rel="noopener">Condusef</a></div>
     </details>
@@ -409,7 +409,7 @@ footer a{color:var(--brand)}
     <details class="why-item" id="why-lp"><summary>4 · Largo plazo: solo lo que sobra (renta fija + S&amp;P 500)</summary>
       <p>Solo se invierte a largo plazo lo que queda <b>después</b> de cubrir liquidez, salud, deudas caras y el colchón. Lo que puedas necesitar pronto no debe estar en instrumentos que pueden bajar de valor.</p>
       <ul>
-        <li><b>Udibonos (renta fija real):</b> su valor se ajusta con la inflación, así que protegen tu poder de compra (Banxico). Se compran en cetesdirecto.</li>
+        <li><b>Udibonos a 10 años (renta fija real):</b> su valor se ajusta con la inflación, así que protegen tu poder de compra (Banxico) y se compran en cetesdirecto. Se usa el plazo de 10 años porque suele pagar una tasa real mayor que el de 3 años (donde ya tienes CETES a 2 años) sin la volatilidad de precio de un bono a 30 años.</li>
         <li><b>CETES a 2 años (renta fija nominal):</b> tasa fija conocida desde el inicio.</li>
         <li><b>Fondo indexado de bolsa / ETF del S&amp;P 500 (renta variable):</b> p. ej. <code>VOO</code>, <code>IVV</code>, <code>VUAA</code> o <code>IVVPESO</code> en una casa de bolsa regulada. Tiene el mayor rendimiento esperado a largo plazo, pero puede caer 20 a 35% en un mal año. Pon ahí solo dinero que no vas a necesitar en 5 años o más. El 10% anual es un supuesto editable, no una promesa.</li>
       </ul>
@@ -459,7 +459,7 @@ footer a{color:var(--brand)}
     <div class="row" style="margin-top:6px">
       <div><label>Inflación esperada %</label><input type="number" id="pInf" value="4.0" step="0.1"></div>
       <div><label>Retención ISR % (2026)</label><input type="number" id="pRet" value="0.90" step="0.01"></div>
-      <div><label>Valor UDI (aprox.)</label><input type="number" id="pUdi" value="8.6" step="0.01"></div>
+      <div><label>Valor UDI del día (Banxico)</label><input type="number" id="pUdi" value="8.6" step="0.01"></div>
     </div>
     <label>Monto exento de ISR en SOFIPOs</label>
     <select id="pEx">
