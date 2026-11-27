@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-12-10",
-  "udi": 8.98,
+  "updated_at": "2026-11-27",
+  "udi": 8.94,
   "inf": 3.75,
   "rates": {
     "liq": {
@@ -34,9 +34,9 @@
       "src": "Banxico SIE (SF349785), subasta 19/11/2026"
     },
     "udi": {
-      "g": 3.65,
-      "date": "2026-11-12",
-      "src": "Banxico SIE (SF61592), tasa real 12/11/2026"
+      "g": 4.93,
+      "date": "2026-11-19",
+      "src": "Banxico SIE (SF43924), tasa real 19/11/2026"
     }
   }
 }
