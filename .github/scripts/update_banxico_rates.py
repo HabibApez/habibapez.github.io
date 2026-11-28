@@ -322,11 +322,8 @@ def build_rates_json(
     else:
         inf_val = prev.get("inf", DEFAULT_DATA["inf"])
 
-    updated_at = (
-        max(observed_dates)
-        if observed_dates
-        else datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    )
+    today_mx = datetime.now(MX_TZ).strftime("%Y-%m-%d")
+    updated_at = min(max(observed_dates), today_mx) if observed_dates else today_mx
 
     out: dict[str, Any] = {
         "updated_at": updated_at,
@@ -375,7 +372,9 @@ def main() -> int:
     fiscal_alert, fiscal_reason = evaluate_fiscal_alert(fiscal, fetched)
 
     prev_exists = bool(args.previous and args.previous.is_file())
-    changed = (not prev_exists) or (numeric_snapshot(new_data) != numeric_snapshot(prev))
+    today_mx = datetime.now(MX_TZ).strftime("%Y-%m-%d")
+    stale_future = str(prev.get("updated_at") or "") > today_mx
+    changed = (not prev_exists) or stale_future or (numeric_snapshot(new_data) != numeric_snapshot(prev))
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(new_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
