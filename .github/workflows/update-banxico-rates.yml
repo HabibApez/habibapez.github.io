@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: update-banxico-rates
@@ -22,6 +23,7 @@ jobs:
         with:
           sparse-checkout: |
             .github/scripts/update_banxico_rates.py
+            .github/scripts/fiscal_mx.json
           sparse-checkout-cone-mode: false
 
       - name: Set up Python
@@ -58,6 +60,7 @@ jobs:
         run: |
           python3 .github/scripts/update_banxico_rates.py \
             --previous /tmp/rates-data/rates.json \
+            --fiscal .github/scripts/fiscal_mx.json \
             --output /tmp/rates-data/rates.json
 
       - name: Commit and push to rates-data only if numeric values changed
@@ -72,3 +75,21 @@ jobs:
           fi
           git commit -m "chore(rates): update Banxico SIE rates (${{ steps.fetch.outputs.updated_at }})"
           git push origin rates-data
+
+      - name: Open GitHub Issue if annual fiscal parameters or Art. 152 ISR table need review
+        if: steps.fetch.outputs.fiscal_alert == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REASON: ${{ steps.fetch.outputs.fiscal_reason }}
+        run: |
+          set -euo pipefail
+          TITLE="Fiscal update check: review MX SM, UMA, LIF withholding, and Art. 96 ISR table"
+          EXISTING=$(gh issue list --repo "$REPO" --state open --search "$TITLE in:title" --json number --jq 'length')
+          if [ "$EXISTING" -gt 0 ]; then
+            echo "Fiscal review issue already open; skipping duplicate."
+            exit 0
+          fi
+          gh issue create --repo "$REPO" \
+            --title "$TITLE" \
+            --body "$(printf 'Automated check triggered by `update-banxico-rates.yml`:\n\n- **Reason:** %s\n\n### Checklist\n1. Verify official DOF values for Salario Mínimo (`sm`), UMA (`uma`), LIF interest withholding (`ret`), and Anexo 8 RMF monthly ISR brackets (`isr_m`).\n2. Update `.github/scripts/fiscal_mx.json` on `main` (and `inpc_base_value` / `inpc_base_date` if Art. 96 brackets changed).\n3. Re-run `Update Banxico rates (rates-data branch)` via `workflow_dispatch` to publish the updated `fiscal` block into `rates-data/rates.json`.' "$REASON")"
