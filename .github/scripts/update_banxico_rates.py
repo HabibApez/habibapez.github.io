@@ -41,6 +41,7 @@ BONDDIA_FEE_SPREAD = 0.25
 #   SF43924  - Udibonos a 10 años, tasa de interés real (subasta primaria)
 #   SP68257  - Valor de la UDI en pesos
 #   SP30578  - Inflación anual INPC (variación porcentual anual)
+#   SP1      - Índice Nacional de Precios al Consumidor (INPC general, para detectar umbral Art. 152 LISR > 10%)
 #   SF61745  - Tasa objetivo de Banxico (referencia para estimar BONDDIA)
 SERIES_MAP = {
     "c28": {
@@ -74,6 +75,10 @@ SERIES_MAP = {
     "inf": {
         "id": "SP30578",
         "label": "Banxico SIE (SP30578)",
+    },
+    "inpc": {
+        "id": "SP1",
+        "label": "Banxico SIE (SP1)",
     },
     "target_rate": {
         "id": "SF61745",
@@ -193,17 +198,64 @@ def load_previous(path: Path | None) -> dict[str, Any]:
     return json.loads(json.dumps(DEFAULT_DATA))
 
 
+def load_fiscal(path: Path | None) -> dict[str, Any] | None:
+    if path and path.is_file():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(data, dict) and isinstance(data.get("isr_m"), list):
+                return data
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"Warning: could not parse fiscal_mx.json ({exc}).", file=sys.stderr)
+    return None
+
+
+def evaluate_fiscal_alert(
+    fiscal: dict[str, Any] | None,
+    fetched: dict[str, tuple[float, str]],
+) -> tuple[bool, str]:
+    """Check whether annual DOF fiscal parameters or Art. 152 LISR (>10% INPC) need review."""
+    if not fiscal:
+        return False, ""
+    reasons: list[str] = []
+    now_year = datetime.now(MX_TZ).year
+    f_year = int(fiscal.get("fiscal_year") or 0)
+    if f_year and now_year > f_year:
+        reasons.append(
+            f"New calendar year {now_year} (fiscal_mx.json is still set to {f_year}): "
+            "review SM, UMA, and LIF interest withholding rate."
+        )
+
+    inpc_sid = SERIES_MAP["inpc"]["id"]
+    base_val = fiscal.get("inpc_base_value")
+    if inpc_sid in fetched and isinstance(base_val, (int, float)) and base_val > 0:
+        cur_inpc, inpc_date = fetched[inpc_sid]
+        cum_pct = (cur_inpc / base_val - 1.0) * 100.0
+        if cum_pct >= 10.0:
+            reasons.append(
+                f"Cumulative INPC since {fiscal.get('inpc_base_date', 'base')} reached "
+                f"{cum_pct:.2f}% ({cur_inpc:.3f} on {inpc_date} vs base {base_val:.3f}), "
+                "crossing the 10% Art. 152 LISR threshold: verify Anexo 8 RMF monthly ISR table."
+            )
+
+    return bool(reasons), " | ".join(reasons)
+
+
 def numeric_snapshot(data: dict[str, Any]) -> dict[str, Any]:
-    """Extract only numeric fields so we commit only when numbers actually change."""
+    """Extract numeric and fiscal fields so we commit only when actual values change."""
     rates = data.get("rates", {})
     return {
         "udi": data.get("udi"),
         "inf": data.get("inf"),
         "rates": {k: rates.get(k, {}).get("g") for k in ("liq", "c28", "c91", "c182", "c364", "c2y", "udi")},
+        "fiscal": data.get("fiscal"),
     }
 
 
-def build_rates_json(fetched: dict[str, tuple[float, str]], prev: dict[str, Any]) -> dict[str, Any]:
+def build_rates_json(
+    fetched: dict[str, tuple[float, str]],
+    prev: dict[str, Any],
+    fiscal: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     prev_rates = prev.get("rates", {})
     out_rates: dict[str, dict[str, Any]] = {}
     observed_dates: list[str] = []
@@ -276,18 +328,24 @@ def build_rates_json(fetched: dict[str, tuple[float, str]], prev: dict[str, Any]
         else datetime.now(timezone.utc).strftime("%Y-%m-%d")
     )
 
-    return {
+    out: dict[str, Any] = {
         "updated_at": updated_at,
         "udi": udi_val,
         "inf": inf_val,
         "rates": ordered_rates,
     }
+    if fiscal is not None:
+        out["fiscal"] = fiscal
+    elif isinstance(prev.get("fiscal"), dict):
+        out["fiscal"] = prev["fiscal"]
+    return out
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Update Banxico rates.json from SIE API.")
     parser.add_argument("--output", required=True, type=Path, help="Output path for rates.json")
     parser.add_argument("--previous", type=Path, default=None, help="Optional previous rates.json for fallback and diff")
+    parser.add_argument("--fiscal", type=Path, default=None, help="Optional fiscal_mx.json to embed in rates.json")
     args = parser.parse_args()
 
     token = os.environ.get("BANXICO_TOKEN", "").strip()
@@ -296,6 +354,7 @@ def main() -> int:
         return 1
 
     prev = load_previous(args.previous)
+    fiscal = load_fiscal(args.fiscal)
     series_ids = [cfg["id"] for cfg in SERIES_MAP.values()]
     fetched = fetch_series(series_ids, token)
 
@@ -312,7 +371,8 @@ def main() -> int:
     if missing:
         print(f"Notice: kept previous values for unavailable series: {', '.join(missing)}", file=sys.stderr)
 
-    new_data = build_rates_json(fetched, prev)
+    new_data = build_rates_json(fetched, prev, fiscal=fiscal)
+    fiscal_alert, fiscal_reason = evaluate_fiscal_alert(fiscal, fetched)
 
     prev_exists = bool(args.previous and args.previous.is_file())
     changed = (not prev_exists) or (numeric_snapshot(new_data) != numeric_snapshot(prev))
@@ -325,11 +385,15 @@ def main() -> int:
         with open(gh_output, "a", encoding="utf-8") as fh:
             fh.write(f"changed={'true' if changed else 'false'}\n")
             fh.write(f"updated_at={new_data['updated_at']}\n")
+            fh.write(f"fiscal_alert={'true' if fiscal_alert else 'false'}\n")
+            fh.write(f"fiscal_reason={fiscal_reason}\n")
 
     print(
         f"Wrote {args.output} (updated_at={new_data['updated_at']}, "
-        f"fetched={len(fetched)}/{len(series_ids)}, changed={changed})"
+        f"fetched={len(fetched)}/{len(series_ids)}, changed={changed}, fiscal_alert={fiscal_alert})"
     )
+    if fiscal_alert:
+        print(f"Fiscal review alert: {fiscal_reason}", file=sys.stderr)
     return 0
 
 

@@ -252,7 +252,7 @@ footer a{color:var(--brand)}
   </div>
 
   <div class="card"><h2><span class="step">3</span>Tus deudas</h2>
-    <div class="debt hint"><span>Nombre</span><span>Saldo</span><span>Tasa %</span><span></span></div>
+    <div class="debt hint"><span>Nombre</span><span>Saldo total</span><span>Tasa %</span><span></span></div>
     <div id="debts"></div>
     <div class="btns">
       <button data-add="card">+ Tarjeta de crédito</button>
@@ -260,7 +260,7 @@ footer a{color:var(--brand)}
       <button data-add="hip">+ Crédito hipotecario</button>
       <button data-add="pers">+ Préstamo personal</button>
     </div>
-    <div class="hint">La tasa de interés anual aparece en tu estado de cuenta o en tu contrato. Los créditos automotriz e hipotecario casi siempre quedan debajo del límite de deuda cara: no se adelantan y su mensualidad va en tus gastos fijos. <a class="why" href="#why-deudas">¿Por qué?</a></div>
+    <div class="hint">Pon el <b>saldo total</b> de cada deuda (no la mensualidad). En tarjetas de crédito, pon el <b>saldo total que genera intereses</b> (si tienes compras a meses sin intereses al 0%, suma su mensualidad en tus gastos fijos del paso 2). La tasa anual aparece en tu estado de cuenta; los créditos automotriz e hipotecario casi siempre quedan debajo del límite de deuda cara: no se adelantan y su mensualidad va en tus gastos fijos. <a class="why" href="#why-deudas">¿Por qué?</a></div>
     <label>Se considera "deuda cara" si su tasa anual es de al menos (%)</label>
     <input type="number" id="umbral" value="20">
   </div>
@@ -322,10 +322,10 @@ footer a{color:var(--brand)}
       </div>
     </div>
     <table class="rtable">
-      <thead><tr><th>Destino</th><th class="n">Monto</th><th>Dó<span id="retTxt">0.90%</span> anual sobre el capitalsa bruta</th><th class="n">Neta*</th><th>Disponibilidad</th></tr></thead>
+      <thead><tr><th>Destino</th><th class="n">Monto</th><th>Dónde invertirlo</th><th class="n">Tasa bruta</th><th class="n">Neta*</th><th>Disponibilidad</th></tr></thead>
       <tbody id="tbl"></tbody>
     </table>
-    <div class="hint">*Neta = tasa bruta − retención de ISR de 0.90% anual sobre el capital (2026). Las SOFIPOs no tienen retención mientras no rebases el monto exento. En las deudas, la tasa es lo que dejas de pagar. En bolsa (S&amp;P 500 / ETFs) no se garantiza ningún rendimiento. <a class="why" href="#why-isr">¿Por qué?</a> · <a class="why" href="#why-sp500">¿Por qué no meter todo al S&amp;P 500?</a></div>
+    <div class="hint">*Neta = tasa bruta − retención de ISR de <span id="retTxt">0.90%</span> anual sobre el capital. Las SOFIPOs no tienen retención mientras no rebases el monto exento. En las deudas, la tasa es lo que dejas de pagar. En bolsa (S&amp;P 500 / ETFs) no hay retención mensual ni rendimiento garantizado; al vender con ganancia aplica 10% de ISR sobre ganancia real (art. 129 LISR). <a class="why" href="#why-isr">¿Por qué?</a> · <a class="why" href="#why-sp500">¿Por qué no meter todo al S&amp;P 500?</a></div>
   </div>
 
   <div class="card alerts" id="alertas">
@@ -489,7 +489,7 @@ footer a{color:var(--brand)}
 </main>
 
 <script>
-const SM = 315.04, UMA = 117.31;
+let SM = 315.04, UMA = 117.31;
 const CD = 'Se compra en cetesdirecto sin comisión; el dinero está disponible al vencer.';
 const R = {
   liq : {n:'BONDDIA (fondo de liquidez diaria de cetesdirecto)', sh:'BONDDIA', g:6.00, src:'Estimado: tasa de fondeo gubernamental menos la comisión del fondo. Verifica el rendimiento actual en cetesdirecto',
@@ -591,13 +591,18 @@ function plan(s){
       const el = S.filter(o => o.p <= b.h && o.r > 0).sort((a,c) => c.r - a.r);
       for (const o of el){
         if (A <= 0) break;
-        const x = Math.min(A, o.room - o.used);
-        if (x <= 0) continue;
-        // Portion of x taxed after exceeding the 5 UMA / 5 SM tax-exempt cap
-        const taxSlice = Math.max(0, (sofTot + x) - Math.max(sofTot, exL));
-        const sNet = o.r - P.ret * (taxSlice / x);
-        if (sNet <= net(b.def)) continue;
-        b.hold.push({sof:o.i, amt:x}); o.used += x; sofTot += x; A -= x;
+        const avail = Math.min(A, o.room - o.used);
+        if (avail <= 0) continue;
+        // Split across the 5 UMA / 5 SM tax-exempt threshold: evaluate exempt and taxable tranches separately
+        const bench = net(b.def);
+        const exRoom = Math.max(0, exL - sofTot);
+        let taken = 0;
+        const exPart = Math.min(avail, exRoom);
+        if (exPart > 0 && o.r > bench) taken += exPart;
+        const taxPart = avail - exPart;
+        if (taxPart > 0 && (o.r - P.ret) > bench) taken += taxPart;
+        if (taken <= 0) continue;
+        b.hold.push({sof:o.i, amt:taken}); o.used += taken; sofTot += taken; A -= taken;
       }
     }
     if (A > 0.005) b.hold.push({k:b.def, amt:A});
@@ -627,7 +632,7 @@ function project(s, p){
   const labels = [], planS = [], base = [];
   const real = $('real').checked;
   let L = p.ef + p.col, G = p.lp, Sv = s.ahorroIn ? 0 : s.ahorro;
-  const rL = p.rLiq/1200, rG = p.rLp/1200, rS = s.ahorroR/1200;
+  const rL = p.rLiqProj/1200, rG = p.rLpProj/1200, rS = s.ahorroR/1200;
   const Dp = p.paid.filter(d => d.s - d.p > 0.5).map(d => ({s:d.s - d.p, r:d.r}));
   const drawP = x => { const a = Math.min(x, Math.max(L,0)); L -= a; x -= a;
                        const b = Math.min(x, Math.max(Sv,0)); Sv -= b; x -= b; G -= x; };
@@ -638,7 +643,10 @@ function project(s, p){
   const target = 3 * (s.fijos + s.vari);
   for (let m = 0; m <= 36; m++){
     if (m > 0){
-      L *= 1 + rL; G *= 1 + rG; Sv *= 1 + rS; Sb *= 1 + rS;
+      if (L > 0) L *= 1 + rL;
+      if (G > 0) G *= 1 + rG;
+      if (Sv > 0) Sv *= 1 + rS;
+      if (Sb > 0) Sb *= 1 + rS;
       drawB(Db.reduce((a,d) => a + d.s*d.r/1200, 0));
       if (m <= s.stress){
         drawP(p.need + Dp.reduce((a,d) => a + d.s*d.r/1200, 0));
@@ -740,15 +748,22 @@ function calc(){
   const p = plan(s);
   const Hef = p.grp('ef'), Hcol = p.grp('col'), Hlp = p.grp('lp');
   p.rLiq = p.rate([...Hef, ...Hcol], p.hNet); p.rLp = p.rate(Hlp, p.hNet);
+  // Fallback rates for future post-employment savings when initial liquidity or long-term bucket is $0
+  p.rLiqProj = (Hef.length + Hcol.length) ? p.rLiq : net('liq');
+  p.rLpProj  = Hlp.length ? p.rLp : Object.entries(PROF[s.perfil]).reduce((a,[k,w]) => a + w*net(k), 0);
 
   // KPIs
   const sv = s.ahorroIn ? 0 : s.ahorro;
   const liq = p.ef + p.col, liqAll = liq + sv, rLiqAll = liqAll ? (liq*p.rLiq + sv*s.ahorroR)/liqAll : 0;
   const tot = liqAll + p.lp, rTot = tot ? (liqAll*rLiqAll + p.lp*p.rLp)/tot : 0;
-  const run = runway(liqAll, rLiqAll, p.need), runAll = runway(tot, rTot, p.need);
+  const remDebtInt = p.paid.reduce((a,d) => a + Math.max(0, d.s - d.p)*d.r/1200, 0);
+  const monthlyOut = p.need + remDebtInt;
+  const run = runway(liqAll, rLiqAll, monthlyOut), runAll = runway(tot, rTot, monthlyOut);
   const show = m => m === Infinity ? '∞' : m >= 120 ? '10+ años' : m.toFixed(1) + ' meses';
   $('kRun').textContent = show(run);
-  $('kRun2').textContent = p.need > 0 ? `${show(runAll)} si también usas tus inversiones · necesitas ${fmt(p.need)} al mes` : 'Tus otros ingresos cubren tus gastos';
+  $('kRun2').textContent = monthlyOut > 0
+    ? `${show(runAll)} si también usas tus inversiones · necesitas ${fmt(monthlyOut)} al mes${remDebtInt > 0.5 ? ` (incluye ${fmt(remDebtInt)} de intereses de deuda pendiente)` : ''}`
+    : 'Tus otros ingresos cubren tus gastos';
   $('kDebt').textContent = fmt(p.debtPaid);
   $('kDebt2').textContent = p.debtHiTotal ? `${Math.round(100*p.debtPaid/p.debtHiTotal)}% de tu deuda cara` : 'No tienes deuda cara 🎉';
   $('kSave').textContent = fmt(p.paid.reduce((a,d) => a + d.p*d.r/100, 0));
@@ -792,7 +807,9 @@ function calc(){
                <b>${fmt(b.amt)}</b><div class="rh">${b.hold.map(h => `${esc(p.hName(h))} · ${f2(p.hGross(h))}`).join('<br>')}</div></div>`
           : `<div class="rung empty" style="height:45%"><div class="rt">Plazo ${LADDER[b.rung]}</div><b>$0</b><div class="rh">No necesitas dinero en este plazo</div></div>`;
       }).join('')
-    : '<div class="hint" style="grid-column:1/-1">Con tu monto actual no queda dinero para el colchón. <a class="why" href="#alertas">Revisa las alertas</a>.</div>';
+    : (p.colTarget <= 0
+      ? '<div class="hint" style="grid-column:1/-1">Todos tus meses de búsqueda ya están cubiertos en efectivo inmediato.</div>'
+      : '<div class="hint" style="grid-column:1/-1">Con tu monto actual no queda dinero para el colchón. <a class="why" href="#alertas">Revisa las alertas</a>.</div>');
 
   // SOFIPOs: explain which benchmark was compared and with what rates
   if (!sofs.length){
@@ -829,16 +846,15 @@ function calc(){
 
   // 1) Dynamic alerts: depend strictly on user inputs (bad = critical issue, '' = contextual note, ok = confirmation)
   const A = [];
-  const totalPool = s.monto + (s.ahorroIn ? s.ahorro : 0);
   if (p.ef < p.need * s.mesesEf - 1)
     A.push(['bad', `<b>Ni siquiera alcanza para los ${s.mesesEf} mes(es) de efectivo inmediato.</b> Faltan ${fmt(p.need * s.mesesEf - p.ef)}. Recorta gastos variables de inmediato o considera usar tu ahorro previo.`, 'why-ef']);
   if (p.col < p.colTarget - 1)
     A.push(['bad', `<b>Tu colchón no alcanza para los ${s.meses} meses planeados.</b> Faltan ${fmt(p.colTarget - p.col)}. Considera pagar solo el mínimo de alguna deuda o recortar gastos variables.`, 'why-colchon']);
   else if (p.colTarget > 0)
     A.push(['ok', `<b>Tu colchón cubre completos los ${s.meses} meses de búsqueda</b> (${fmt(p.ef + p.col)} entre efectivo y escalera).`, 'why-colchon']);
-  if (s.stress > runAll && p.need > 0)
+  if (s.stress > runAll && monthlyOut > 0)
     A.push(['bad', `<b>En tu prueba de estrés (${s.stress} meses sin empleo) tu patrimonio total se agotaría en el mes ${runAll.toFixed(1)}</b>, incluso usando tus inversiones de largo plazo. Necesitarías recortar gastos o generar ingresos temporales antes de ese punto.`, 'why-proy']);
-  else if (s.stress > run && p.need > 0)
+  else if (s.stress > run && monthlyOut > 0)
     A.push(['', `<b>En tu prueba de estrés (${s.stress} meses sin empleo) sí te alcanza el dinero</b> (tu patrimonio total dura <b>${show(runAll)}</b>), pero en el <b>mes ${run.toFixed(1)}</b> se termina el colchón líquido que apartaste para ${s.meses} meses y tendrías que tomar de tu inversión de largo plazo antes de tiempo. Si ves probable tardar ${s.stress} meses, sube los meses de búsqueda en el <a class="why" href="#meses">paso 2</a>.`, 'why-proy']);
   if (p.debtPaid < p.debtHiTotal - 1)
     A.push(['bad', `<b>No alcanza para liquidar toda tu deuda cara.</b> Quedan ${fmt(p.debtHiTotal - p.debtPaid)} generando intereses altos. Pide a tu banco una reestructura o un plan de pagos fijos.`, 'why-deudas']);
@@ -885,15 +901,37 @@ function calc(){
   draw(pr, s.stress);
 }
 
+/* Monthly ISR table (Art. 96 LISR, RMF 2026) used to compute the USMO effective rate for severance withholding */
+let ISR_M = [
+  [0.01,       844.59,      0.00, 0.0192],
+  [844.60,    7168.51,     16.22, 0.0640],
+  [7168.52,  12598.02,    420.95, 0.1088],
+  [12598.03, 14644.64,   1011.68, 0.1600],
+  [14644.65, 17533.64,   1339.14, 0.1792],
+  [17533.65, 35362.83,   1856.84, 0.2136],
+  [35362.84, 55736.68,   5665.16, 0.2352],
+  [55736.69, 106410.50, 10457.09, 0.3000],
+  [106410.51,141880.66, 25659.23, 0.3200],
+  [141880.67,425641.99, 37009.69, 0.3400],
+  [425642.00, Infinity, 133488.54, 0.3500]
+];
+function isrMensual(sal){
+  if (!(sal > 0)) return 0;
+  for (const [li, ls, cf, pct] of ISR_M) if (sal <= ls) return cf + Math.max(0, sal - li) * pct;
+  return 0;
+}
+
 /* Approximate Mexican Federal Labor Law (LFT) severance estimator */
 function lft(){
   const S = num('lSal'), A = +$('lAnios').value || 0, d = S/30;
   const i90 = 90*d, i20 = 20*d*A, pa = 12*Math.min(d, 2*SM)*A, tot = i90 + i20 + pa;
   const yrs = Math.floor(A) + ((A % 1) > 0.5 ? 1 : 0);
-  const ex = Math.min(tot, 90*UMA*yrs), isr = (tot - ex)*0.20, neto = tot - isr;
-  $('lOut').innerHTML = `3 meses de salario: <b>${fmt(i90)}</b><br>20 días por año: <b>${fmt(i20)}</b><br>Prima de antigüedad: <b>${fmt(pa)}</b><br>
-    Total bruto: <b>${fmt(tot)}</b> · Exento de ISR: ${fmt(ex)}<br>Neto aproximado: <b>${fmt(neto)}</b> <span class="badge">ISR estimado: 20% del excedente</span><br>
-    No incluye el finiquito (aguinaldo, vacaciones, prima vacacional). La ley usa el salario integrado, que da un monto mayor. <a class="why" href="#why-revisar">¿Por qué?</a>`;
+  const ex = Math.min(tot, 90*UMA*yrs);
+  const usmoRate = S > 0 ? isrMensual(S) / S : 0;
+  const isr = Math.max(0, tot - ex) * usmoRate, neto = tot - isr;
+  $('lOut').innerHTML = `3 meses de salario: <b>${fmt(i90)}</b><br>20 días por año*: <b>${fmt(i20)}</b><br>Prima de antigüedad: <b>${fmt(pa)}</b><br>
+    Total bruto: <b>${fmt(tot)}</b> · Exento de ISR: ${fmt(ex)}<br>Neto aproximado: <b>${fmt(neto)}</b> <span class="badge">ISR art. 96 LISR: ${(usmoRate*100).toFixed(1)}% del excedente</span><br>
+    *Los 20 días por año aplican cuando no hay reinstalación o por negociación. No incluye finiquito (aguinaldo, vacaciones, prima vacacional) y la ley usa salario integrado. <a class="why" href="#why-revisar">¿Por qué?</a>`;
   if (!postTouched) $('post').value = grp3(S * 0.10);
   return neto;
 }
@@ -1025,6 +1063,34 @@ renderDebts(); renderSofs(); lft(); calc();
       P.inf = infVal;
       $('pInf').value = infVal;
       updated = true;
+    }
+
+    // Optional fiscal block (SM, UMA, LIF withholding rate, Art. 96 monthly ISR brackets)
+    let fiscalUpdated = false;
+    if (data.fiscal && typeof data.fiscal === 'object'){
+      const f = data.fiscal;
+      const smVal = Number(f.sm), umaVal = Number(f.uma), retVal = Number(f.ret);
+      if (isFinite(smVal) && smVal > 0){ SM = smVal; fiscalUpdated = true; }
+      if (isFinite(umaVal) && umaVal > 0){ UMA = umaVal; fiscalUpdated = true; }
+      if (isFinite(retVal) && retVal >= 0 && !touchedParams.has('ret')){
+        P.ret = retVal;
+        $('pRet').value = retVal;
+        updated = true;
+      }
+      if (Array.isArray(f.isr_m) && f.isr_m.length >= 5){
+        const parsed = f.isr_m
+          .map(row => Array.isArray(row) && row.length === 4 ? [Number(row[0]), row[1] == null ? Infinity : Number(row[1]), Number(row[2]), Number(row[3])] : null)
+          .filter(row => row && row.every((v, idx) => idx === 1 ? (v === Infinity || isFinite(v)) : isFinite(v)));
+        if (parsed.length === f.isr_m.length){ ISR_M = parsed; fiscalUpdated = true; }
+      }
+      if (fiscalUpdated){
+        const optUma = document.querySelector('#pEx option[value="uma"]');
+        const optSm  = document.querySelector('#pEx option[value="sm"]');
+        if (optUma) optUma.textContent = `5 UMA anuales ≈ ${fmt(5*UMA*365)} (criterio conservador)`;
+        if (optSm)  optSm.textContent  = `5 salarios mínimos anuales ≈ ${fmt(5*SM*365)} (texto literal de la ley)`;
+        lft();
+        updated = true;
+      }
     }
 
     const updEs = fmtDateEs(data.updated_at);
